@@ -588,15 +588,15 @@ nav,
 }
 
 /* Platform-specific variants to mirror popup Copy/Close colors */
-/* Flipkart: Copy (#FF9F00, black text), Close (#fb641b, white text) */
+/* Flipkart: Convert Share (#FFE51F, black text), Convert Only (#fb641b, white text) */
 .flipkart-convert-btn.convert-share-btn {
-    background-color: #FF9F00 !important;
+    background-color: #FFE51F !important;
     color: #000000 !important;
 }
 
 .flipkart-convert-btn.convert-share-btn:hover {
-    background-color: #FFB84D !important;
-    /* lighter of #FF9F00 */
+    background-color: #FFED66 !important;
+    /* lighter of #FFE51F */
 }
 
 .flipkart-convert-btn.convert-only-btn {

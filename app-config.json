@@ -1,1 +1,9 @@
-{}
+{
+  "flipkart": {
+    "button": {
+      "placements": [
+        { "target": { "css": "h1" }, "mode": "after" }
+      ]
+    }
+  }
+}
