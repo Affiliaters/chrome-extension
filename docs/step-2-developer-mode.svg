@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="720" height="300" rx="16" fill="#eef2f7"/>
+  <circle cx="54" cy="54" r="24" fill="#2563eb"/>
+  <text x="54" y="63" font-size="26" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+  <text x="92" y="50" font-size="22" font-weight="700" fill="#1f2937">Open the Extensions page</text>
+  <text x="92" y="76" font-size="14" fill="#6b7280">Go to chrome://extensions, then turn on Developer mode (top-right).</text>
+
+  <!-- browser window -->
+  <rect x="40" y="104" width="640" height="164" rx="12" fill="#ffffff" stroke="#d0d7de"/>
+  <rect x="40" y="104" width="640" height="40" rx="12" fill="#f3f5f8"/>
+  <rect x="40" y="132" width="640" height="12" fill="#f3f5f8"/>
+  <circle cx="64" cy="124" r="6" fill="#ff5f57"/>
+  <circle cx="84" cy="124" r="6" fill="#febc2e"/>
+  <circle cx="104" cy="124" r="6" fill="#28c840"/>
+  <rect x="130" y="112" width="420" height="24" rx="12" fill="#ffffff" stroke="#d7dee6"/>
+  <text x="146" y="129" font-size="13" fill="#374151">chrome://extensions</text>
+
+  <text x="64" y="186" font-size="16" font-weight="700" fill="#1f2937">Extensions</text>
+
+  <!-- developer mode toggle highlighted -->
+  <rect x="452" y="166" width="204" height="40" rx="10" fill="#eaf0ff" stroke="#2563eb" stroke-width="2"/>
+  <text x="470" y="191" font-size="13" font-weight="600" fill="#1f2937">Developer mode</text>
+  <rect x="600" y="176" width="44" height="20" rx="10" fill="#2563eb"/>
+  <circle cx="634" cy="186" r="8" fill="#ffffff"/>
+
+  <text x="64" y="238" font-size="13" fill="#6b7280">Cards for your installed extensions appear below.</text>
+</svg>

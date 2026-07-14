@@ -1,0 +1,55 @@
+{
+  "manifest_version": 3,
+  "name": "Affiliaters Deal Converter",
+  "version": "0.0.1",
+  "description": "Convert deals using Affiliaters",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "cookies",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*.flipkart.com/*",
+    "https://*.myntra.com/*",
+    "https://*.amazon.in/*",
+    "https://*.croma.com/*",
+    "https://*.shopsy.in/*",
+    "https://app.affiliaters.in/*",
+    "https://app-api.affiliaters.in/*",
+    "https://ek.affiliaters.in/*",
+    "https://ekaro-api.affiliaters.in/*",
+    "https://web.whatsapp.com/*",
+    "https://raw.githubusercontent.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "images/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.flipkart.com/*",
+        "https://*.myntra.com/*",
+        "https://*.amazon.in/*",
+        "https://*.croma.com/*",
+        "https://*.shopsy.in/*"
+      ],
+      "css": [
+        "content-styles.css"
+      ],
+      "js": [
+        "config.js",
+        "storage.js",
+        "content.js"
+      ]
+    }
+  ],
+  "icons": {
+    "128": "images/icon.png"
+  }
+}

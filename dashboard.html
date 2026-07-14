@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliaters Deal Converter</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="dashboard-container app-shell">
+        <header class="app-header">
+            <img src="images/logo.png" alt="Affiliaters Logo" class="nav-logo">
+            <div class="header-actions">
+                <div class="site-switcher-wrap">
+                    <button type="button" class="site-pill" id="siteSwitcherBtn" aria-haspopup="true" aria-expanded="false">
+                        <span class="site-dot" id="sitePillDot"></span>
+                        <span class="site-pill-name" id="sitePillName">Affiliaters</span>
+                        <i class="fas fa-chevron-down site-pill-caret"></i>
+                    </button>
+                    <div class="site-menu" id="siteSwitcherMenu" hidden>
+                        <button type="button" class="site-menu-item" data-site="affiliaters">
+                            <span class="site-dot dot-affiliaters"></span>
+                            <span class="site-menu-name">Affiliaters</span>
+                            <span class="site-menu-meta"></span>
+                        </button>
+                        <button type="button" class="site-menu-item" data-site="ekaro">
+                            <span class="site-dot dot-ekaro"></span>
+                            <span class="site-menu-name">EK Affiliaters</span>
+                            <span class="site-menu-meta"></span>
+                        </button>
+                    </div>
+                </div>
+                <button class="theme-toggle" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </header>
+
+        <main class="app-body">
+            <!-- HOME: converter + recent conversions -->
+            <section class="tab-panel" id="tab-home">
+                <div class="converter-section">
+                    <div class="input-area">
+                        <textarea placeholder="Paste your deal text here..."></textarea>
+                    </div>
+                    <div class="controls-area">
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="convertOnlyToggle">
+                            <span class="toggle-slider"></span>
+                            <span class="toggle-label">Convert only</span>
+                        </label>
+                        <button class="btn-convert">
+                            <i class="fas fa-sync"></i> Convert
+                        </button>
+                    </div>
+                </div>
+                <div class="history-section">
+                    <div class="history-header">
+                        <h2>Recent Conversions</h2>
+                        <div class="history-actions-row">
+                            <button class="btn-see-all">
+                                <i class="fas fa-list"></i> See All
+                            </button>
+                            <button class="btn-clear-history">
+                                <i class="fas fa-trash"></i> Clear History
+                            </button>
+                        </div>
+                    </div>
+                    <div class="history-list" id="recentHistoryList"></div>
+                </div>
+            </section>
+
+            <!-- HISTORY: all conversions for the active platform -->
+            <section class="tab-panel" id="tab-history" hidden>
+                <div class="page-header">
+                    <h1 class="page-title">All Conversions</h1>
+                </div>
+                <div class="history-actions-row">
+                    <button class="btn-clear-history">
+                        <i class="fas fa-trash"></i> Clear History
+                    </button>
+                </div>
+                <div class="history-list" id="allHistoryList"></div>
+            </section>
+
+            <!-- SETTINGS: account, logout (+ room for more settings later) -->
+            <section class="tab-panel" id="tab-profile" hidden>
+                <div class="page-header">
+                    <h1 class="page-title">Settings</h1>
+                </div>
+                <div class="profile-card">
+                    <div class="profile-avatar"><i class="fas fa-user-circle"></i></div>
+                    <div class="profile-info">
+                        <div class="profile-name" id="profileSiteName">Affiliaters</div>
+                        <div class="profile-email" id="profileEmail">&mdash;</div>
+                    </div>
+                </div>
+                <button class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+
+                <div class="settings-section">
+                    <div class="settings-section-title">On-page buttons</div>
+                    <p class="settings-section-note">Show the Convert buttons on these shopping sites. Off by default.</p>
+                    <div class="retailer-toggles" id="retailerToggles"></div>
+                </div>
+            </section>
+
+            <!-- WHATSAPP: session transfer (nav item only appears on WhatsApp Web) -->
+            <section class="tab-panel" id="tab-whatsapp" hidden>
+                <div class="wa-panel">
+                    <div class="wa-visual">
+                        <img class="wa-loader" id="waLoader" src="images/whatsapp_loader.svg" alt="Loading">
+                        <div class="wa-badge wa-badge-ok" id="waTick" hidden>
+                            <svg viewBox="0 0 52 52" aria-hidden="true">
+                                <circle class="wa-badge-ring" cx="26" cy="26" r="24"></circle>
+                                <path class="wa-badge-check" fill="none" d="M15 27l7 7 15-16"></path>
+                            </svg>
+                        </div>
+                        <div class="wa-badge wa-badge-brand" id="waIcon" hidden>
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                    </div>
+                    <h2 class="wa-title" id="waTitle">Checking WhatsApp</h2>
+                    <p class="wa-status" id="waStatus">Getting your connection status&hellip;</p>
+                    <div class="wa-detail" id="waDetail" hidden>
+                        <span class="site-dot" id="waDetailDot"></span>
+                        <span id="waDetailText"></span>
+                    </div>
+                    <button class="btn-convert btn-wa-transfer" id="waTransferBtn" hidden></button>
+                    <p class="wa-hint" id="waHint" hidden></p>
+                </div>
+            </section>
+
+            <!-- AMAZON: associate-session link (nav item only appears on amazon.in) -->
+            <section class="tab-panel" id="tab-amazon" hidden>
+                <div class="wa-panel">
+                    <div class="wa-visual">
+                        <img class="wa-loader" id="amzLoader" src="images/whatsapp_loader.svg" alt="Loading">
+                        <div class="wa-badge wa-badge-ok" id="amzTick" hidden>
+                            <svg viewBox="0 0 52 52" aria-hidden="true">
+                                <circle class="wa-badge-ring" cx="26" cy="26" r="24"></circle>
+                                <path class="wa-badge-check" fill="none" d="M15 27l7 7 15-16"></path>
+                            </svg>
+                        </div>
+                        <div class="wa-badge amz-badge-brand" id="amzIcon" hidden>
+                            <i class="fab fa-amazon"></i>
+                        </div>
+                    </div>
+                    <h2 class="wa-title" id="amzTitle">Checking Amazon</h2>
+                    <p class="wa-status" id="amzStatus">Getting your Associate status&hellip;</p>
+                    <!-- Guided checklist: each step lights up done / current / blocked
+                         so the user can see exactly which prerequisite is missing. -->
+                    <ol class="amz-steps" id="amzSteps">
+                        <li class="amz-step" id="amzStep1">
+                            <span class="amz-step-badge" id="amzStep1Badge">1</span>
+                            <div class="amz-step-body">
+                                <span class="amz-step-title">Log in to Amazon Associates</span>
+                                <span class="amz-step-note">On amazon.in, so the SiteStripe bar shows at the top</span>
+                            </div>
+                        </li>
+                        <li class="amz-step" id="amzStep2">
+                            <span class="amz-step-badge" id="amzStep2Badge">2</span>
+                            <div class="amz-step-body">
+                                <span class="amz-step-title">Link your account</span>
+                                <span class="amz-step-note">Save the session for amzn.to short links</span>
+                            </div>
+                        </li>
+                    </ol>
+                    <div class="amz-warn" id="amzWarn" hidden>
+                        <strong class="amz-warn-head">&#9888;&#65039; Use a spare Associate account &mdash; not your main one.</strong>
+                        <span id="amzWarnBody"></span>
+                    </div>
+                    <label class="amz-consent" id="amzConsent" hidden>
+                        <input type="checkbox" id="amzAgree">
+                        <span>I understand and I&rsquo;m using a spare account</span>
+                    </label>
+                    <div class="wa-detail" id="amzDetail" hidden>
+                        <span class="site-dot" id="amzDetailDot"></span>
+                        <span id="amzDetailText"></span>
+                    </div>
+                    <button class="btn-convert btn-wa-transfer" id="amzBtn" hidden></button>
+                    <p class="wa-hint" id="amzHint" hidden></p>
+                </div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-tab active" data-tab="home">
+                <i class="fas fa-home"></i><span>Home</span>
+            </button>
+            <button class="nav-tab" data-tab="history">
+                <i class="fas fa-history"></i><span>History</span>
+            </button>
+            <button class="nav-tab" data-tab="whatsapp" id="navWhatsapp" hidden>
+                <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
+            </button>
+            <button class="nav-tab" data-tab="amazon" id="navAmazon" hidden>
+                <i class="fab fa-amazon"></i><span>Amazon</span>
+            </button>
+            <button class="nav-tab" data-tab="profile">
+                <i class="fas fa-cog"></i><span>Settings</span>
+            </button>
+        </nav>
+    </div>
+    <script src="config.js"></script>
+    <script src="storage.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+
+</html>

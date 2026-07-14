@@ -1,0 +1,913 @@
+/* Reset */
+.convert-deal-btn,
+.deal-popup,
+.notification {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* Convert Button Styles */
+.convert-deal-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    margin: 10px 0;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Myntra Button */
+.myntra-convert-btn {
+    background-color: #FF3F6C;
+    color: white;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 300px;
+    height: 48px;
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+    display: block;
+}
+
+.myntra-convert-btn:hover {
+    background-color: #FF527B;
+}
+
+/* Flipkart Button */
+.flipkart-convert-btn.convert-deal-btn {
+    background-color: #ff9f00 !important;
+    /* Add to Cart orange color */
+    color: #FFFFFF !important;
+    border: none;
+    border-radius: 2px;
+    width: 100%;
+    max-width: 300px;
+    height: 48px;
+    margin: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .2);
+}
+
+.flipkart-convert-btn.convert-deal-btn:hover {
+    background-color: #fb641b !important;
+    /* Buy Now coral color */
+}
+
+/* Amazon Button */
+.amazon-convert-btn {
+    background-color: #FFD814;
+    color: #0F1111;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+    box-shadow: 0 2px 5px rgba(15, 17, 17, .15);
+}
+
+/* Croma Buttons - match image: Buy Now (green), Add to Cart (dark with border) */
+.croma-convert-btn.convert-only-btn {
+    background-color: #13E0A3 !important;
+    /* approx teal green */
+    color: #0D0D0D !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+}
+
+.croma-convert-btn.convert-only-btn:hover {
+    filter: brightness(1.05) !important;
+}
+
+.croma-convert-btn.convert-share-btn {
+    background-color: #353535 !important;
+    color: #FFFFFF !important;
+    border: 2px solid #FFFFFF !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+}
+
+.croma-convert-btn.convert-share-btn:hover {
+    filter: brightness(1.05) !important;
+}
+
+.shopsy-convert-btn.convert-only-btn {
+    background-color: rgba(80, 60, 235, 1.00) !important;
+    /* Shopsy Copy style */
+    color: #FFFFFF !important;
+}
+
+.shopsy-convert-btn.convert-share-btn {
+    background-color: #FFFFFF !important;
+    /* Shopsy Close style */
+    color: rgba(80, 60, 235, 1.00) !important;
+    border: 1px solid rgba(80, 60, 235, 0.30) !important;
+}
+
+.shopsy-convert-btn.convert-only-btn:hover {
+    background-color: rgba(100, 85, 245, 1.00) !important;
+    /* lighter purple */
+}
+
+.shopsy-convert-btn.convert-share-btn:hover {
+    background-color: #F7F7FF !important;
+}
+
+.amazon-convert-btn:hover {
+    background-color: #F7CA00;
+}
+
+.amazon-button-container {
+    margin: 10px 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* Popup Styles */
+.deal-popup {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    z-index: 2147483647 !important;
+    /* Maximum possible z-index */
+}
+
+.popup-content {
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    background: white !important;
+    padding: 24px !important;
+    border-radius: 8px !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+    z-index: 2147483647 !important;
+    /* Maximum possible z-index */
+}
+
+.popup-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 15px !important;
+    border-bottom: 1px solid #eee !important;
+    padding-bottom: 10px !important;
+}
+
+.popup-header h3 {
+    margin: 0 !important;
+    font-size: 18px !important;
+    color: #333 !important;
+    font-weight: 600 !important;
+}
+
+.popup-close {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.popup-close:hover {
+    color: #333;
+}
+
+.deal-card {
+    background: #f8f9fa !important;
+    border-radius: 6px !important;
+    padding: 15px !important;
+    margin: 10px 0 !important;
+    min-height: 100px !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: #333 !important;
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+}
+
+.popup-buttons {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    margin-top: 15px !important;
+    padding-top: 15px !important;
+    border-top: 1px solid #eee !important;
+}
+
+.popup-copy {
+    padding: 8px 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.popup-copy:hover {
+    background-color: #218838;
+}
+
+/* Notification Styles */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    border-radius: 4px;
+    color: white;
+    font-size: 14px;
+    z-index: 1000000;
+    animation: slideIn 0.3s ease-out;
+}
+
+.notification.success {
+    background-color: #28a745;
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Disabled state */
+.convert-deal-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Button Containers */
+.button-container {
+    display: flex;
+    gap: 8px;
+    padding: 16px;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+
+/* Myntra Style */
+.convert-deal-btn.myntra {
+    background-color: #ff3e6c;
+    color: white;
+    border-radius: 4px;
+}
+
+/* Flipkart Style */
+.convert-deal-btn.flipkart {
+    background-color: #ff9f00;
+    color: white;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.convert-deal-btn:hover {
+    opacity: 0.95;
+}
+
+.convert-deal-btn i {
+    font-size: 16px;
+}
+
+/* Ensure Font Awesome is loaded */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+
+/* Popup content */
+.popup-content {
+    background: white !important;
+    width: 90% !important;
+    max-width: 500px !important;
+    padding: 24px !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Popup title */
+.popup-title {
+    font-size: 20px !important;
+    font-weight: 600 !important;
+    color: #282c3f !important;
+    margin: 0 0 20px 0 !important;
+}
+
+/* Textarea */
+.popup-textarea {
+    width: 100% !important;
+    min-height: 120px !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    resize: none !important;
+    margin-bottom: 20px !important;
+    background-color: #ffffff !important;
+}
+
+/* Button container */
+.popup-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Common button styles */
+.popup-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.copy-button {
+    background-color: #28a745;
+    color: white;
+}
+
+.close-button {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Flipkart specific styles */
+.flipkart .popup-content {
+    border-radius: 2px !important;
+}
+
+.flipkart .popup-textarea {
+    border: 1px solid #2874f0 !important;
+    border-radius: 2px !important;
+}
+
+.flipkart .popup-buttons button {
+    border-radius: 2px !important;
+    border: none !important;
+}
+
+.flipkart .popup-buttons .btn-copy {
+    background-color: #ff9f00 !important;
+    color: white !important;
+}
+
+.flipkart .popup-buttons .btn-close {
+    background-color: #fb641b !important;
+    color: white !important;
+}
+
+/* Myntra specific styles */
+.myntra .popup-content {
+    border-radius: 4px !important;
+}
+
+.myntra .popup-textarea {
+    border: 1px solid #ff3e6c !important;
+    border-radius: 4px !important;
+}
+
+.myntra .popup-buttons button {
+    border-radius: 4px !important;
+}
+
+.myntra .popup-buttons .btn-copy {
+    background-color: #ff3e6c !important;
+    color: white !important;
+    border: none !important;
+}
+
+.myntra .popup-buttons .btn-close {
+    background-color: white !important;
+    color: #282c3f !important;
+    border: 1px solid #d4d5d8 !important;
+}
+
+/* Notifications */
+.deal-notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 12px 24px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10000;
+    animation: slideInRight 0.3s ease;
+}
+
+.deal-notification.success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.deal-notification.error {
+    background-color: #ffebee;
+    color: #c62828;
+}
+
+.deal-notification i {
+    font-size: 18px;
+}
+
+/* Animations */
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Ensure header stays above the button */
+header,
+.header,
+[class*="header"],
+[class*="Header"],
+nav,
+.nav,
+[class*="nav"],
+[class*="Nav"],
+.modal,
+.popup,
+[class*="modal"],
+[class*="popup"],
+[class*="Modal"],
+[class*="Popup"] {
+    position: relative;
+    z-index: 9999;
+}
+
+.deal-card {
+    min-height: 120px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    margin: 10px 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    user-select: all;
+}
+
+/* Flipkart card style */
+/* .flipkart .deal-card {
+    border: 1px solid #2874f0 !important;
+    border-radius: 2px !important;
+}
+
+/* Myntra card style */
+/* .myntra .deal-card {
+    border: 1px solid #ff3e6c !important;
+    border-radius: 4px !important;
+} */
+
+/* Amazon button style */
+.amazon-convert-btn {
+    background-color: #FFD814;
+    color: #0F1111;
+    border-radius: 25px;
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+    box-shadow: 0 2px 5px rgba(15, 17, 17, .15);
+}
+
+.amazon-convert-btn:hover {
+    background-color: #F7CA00;
+}
+
+.amazon-button-container {
+    margin: 10px 0;
+    display: flex;
+    justify-content: flex-start;
+}
+
+/* Myntra button style */
+.myntra-convert-btn {
+    background-color: #FF3F6C;
+    color: white;
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+}
+
+.myntra-convert-btn:hover {
+    background-color: #FF527B;
+}
+
+/* Flipkart button style */
+.flipkart-convert-btn {
+    background-color: #2874F0;
+    color: white;
+    width: 100%;
+    max-width: 300px;
+    height: 40px;
+}
+
+.flipkart-convert-btn:hover {
+    background-color: #2264D1;
+}
+
+/* Update Flipkart button styles */
+.convert-button-container {
+    margin: 10px 0;
+    width: 100%;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* Make two buttons sit nicely side by side and reuse platform styles */
+.convert-button-container .convert-deal-btn {
+    flex: 0 0 auto;
+    width: auto !important;
+    max-width: none !important;
+}
+
+/* Ensure platform buttons do not expand full width inside container */
+.convert-button-container .flipkart-convert-btn,
+.convert-button-container .myntra-convert-btn,
+.convert-button-container .amazon-convert-btn {
+    width: auto !important;
+    max-width: none !important;
+}
+
+/* Variant colors aligned with popup/dashboard styles */
+/* Convert Only: primary blue; Convert Share: warning yellow */
+.convert-button-container .convert-only-btn {
+    background-color: #2A85FF;
+    color: #FFFFFF;
+}
+
+.convert-button-container .convert-only-btn:hover {
+    background-color: #1B64D6;
+}
+
+.convert-button-container .convert-share-btn {
+    background-color: #353535 !important;
+    color: #FFFFFF !important;
+}
+
+.convert-button-container .convert-share-btn:hover {
+    background-color: #353535 !important;
+}
+
+/* Platform-specific variants to mirror popup Copy/Close colors */
+/* Flipkart: Copy (#FF9F00, black text), Close (#fb641b, white text) */
+.flipkart-convert-btn.convert-share-btn {
+    background-color: #FF9F00 !important;
+    color: #000000 !important;
+}
+
+.flipkart-convert-btn.convert-share-btn:hover {
+    background-color: #FFB84D !important;
+    /* lighter of #FF9F00 */
+}
+
+.flipkart-convert-btn.convert-only-btn {
+    background-color: #fb641b !important;
+    color: #FFFFFF !important;
+}
+
+.flipkart-convert-btn.convert-only-btn:hover {
+    background-color: #FC7E42 !important;
+    /* lighter of #fb641b */
+}
+
+/* Myntra: Copy (#FF3F6C, white), Close (#535766, white) */
+.myntra-convert-btn.convert-share-btn {
+    background-color: #FF3F6C !important;
+    color: #FFFFFF !important;
+}
+
+.myntra-convert-btn.convert-share-btn:hover {
+    background-color: #FF6C8F !important;
+    /* lighter of #FF3F6C */
+}
+
+.myntra-convert-btn.convert-only-btn {
+    background-color: #535766 !important;
+    color: #FFFFFF !important;
+}
+
+.myntra-convert-btn.convert-only-btn:hover {
+    background-color: #6B7082 !important;
+    /* lighter of #535766 */
+}
+
+/* Amazon: Copy (#FFD814, black), Close (#FFA41C, black) */
+.amazon-convert-btn.convert-share-btn {
+    background-color: #FFD814 !important;
+    color: #0F1111 !important;
+}
+
+.amazon-convert-btn.convert-share-btn:hover {
+    background-color: #FFDF4D !important;
+    /* lighter of #FFD814 */
+}
+
+.amazon-convert-btn.convert-only-btn {
+    background-color: #FFA41C !important;
+    color: #0F1111 !important;
+}
+
+.amazon-convert-btn.convert-only-btn:hover {
+    background-color: #FFB550 !important;
+    /* lighter of #FFA41C */
+}
+
+/* Add debug outline for development */
+.convert-button-container {
+    border: 1px solid transparent;
+    /* helps with visibility during development */
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.deal-popup {
+    animation: fadeIn 0.3s ease-out !important;
+}
+
+/* Platform specific button styles in popup */
+.popup-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* Flipkart popup buttons */
+.flipkart .popup-copy {
+    background-color: #FF9F00 !important;
+    color: #000000 !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    border-radius: 2px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+}
+
+.flipkart .popup-close {
+    background-color: #fb641b !important;
+    color: #ffffff !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    border-radius: 2px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+}
+
+/* Myntra popup buttons */
+.myntra .popup-copy {
+    background-color: #FF3F6C !important;
+    color: white !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+}
+
+.myntra .popup-close {
+    background-color: #535766 !important;
+    color: white !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+}
+
+/* Amazon popup buttons */
+.amazon .popup-copy {
+    background-color: #FFD814 !important;
+    color: #0F1111 !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 5px rgba(15, 17, 17, .15) !important;
+}
+
+.amazon .popup-close {
+    background-color: #FFA41C !important;
+    color: #0F1111 !important;
+    padding: 12px 24px !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 5px rgba(15, 17, 17, .15) !important;
+}
+
+/* Shopsy popup buttons */
+.shopsy .popup-copy {
+    background-color: rgba(80, 60, 235, 1.00) !important;
+    color: #FFFFFF !important;
+}
+
+.shopsy .popup-close {
+    background-color: #FFFFFF !important;
+    color: rgba(80, 60, 235, 1.00) !important;
+    border: 1px solid rgba(80, 60, 235, 0.30) !important;
+}
+
+/* Croma popup buttons */
+.croma .popup-copy {
+    background-color: rgb(19, 224, 163) !important;
+    color: #FFFFFF !important;
+    border-radius: 12px !important;
+    font-weight: 700 !important;
+}
+
+.croma .popup-close {
+    background-color: rgb(53, 53, 53) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 12px !important;
+    font-weight: 600 !important;
+    border-width: 2px !important;
+    border-style: solid !important;
+    border-color: rgb(1, 1, 1) !important;
+    border-image: initial !important;
+    border-radius: 12px !important;
+}
+
+/* Ensure in-page Shopsy buttons match popup exactly (override generic variants) */
+.convert-button-container .shopsy-convert-btn.convert-only-btn {
+    background-color: rgba(80, 60, 235, 1.00) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+}
+
+.convert-button-container .shopsy-convert-btn.convert-only-btn:hover {
+    background-color: rgba(100, 85, 245, 1.00) !important;
+}
+
+.convert-button-container .shopsy-convert-btn.convert-share-btn {
+    background-color: #FFFFFF !important;
+    color: rgba(80, 60, 235, 1.00) !important;
+    border: 1px solid rgba(80, 60, 235, 0.30) !important;
+}
+
+.convert-button-container .shopsy-convert-btn.convert-share-btn:hover {
+    background-color: #F7F7FF !important;
+}
+
+/* Hover states */
+.popup-copy:hover,
+.popup-close:hover {
+    opacity: 0.9 !important;
+}
+
+/* Common button base styles */
+.popup-copy,
+.popup-close {
+    font-size: 14px !important;
+    padding: 8px 20px !important;
+    font-weight: 500 !important;
+    border: none !important;
+    cursor: pointer !important;
+    height: 36px !important;
+    min-width: 100px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* Flipkart buttons */
+.flipkart .popup-copy {
+    background-color: #FF9F00 !important;
+    color: #000000 !important;
+    border-radius: 2px !important;
+    font-size: 13px !important;
+    height: 32px !important;
+    padding: 0 16px !important;
+}
+
+.flipkart .popup-close {
+    background-color: #fb641b !important;
+    color: #ffffff !important;
+    border-radius: 2px !important;
+    font-size: 13px !important;
+    height: 32px !important;
+    padding: 0 16px !important;
+}
+
+/* Myntra buttons */
+.myntra .popup-copy {
+    background-color: #FF3F6C !important;
+    color: white !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    height: 32px !important;
+    padding: 0 16px !important;
+}
+
+.myntra .popup-close {
+    background-color: #535766 !important;
+    color: white !important;
+    border-radius: 4px !important;
+    font-size: 13px !important;
+    height: 32px !important;
+    padding: 0 16px !important;
+}
+
+/* Amazon buttons */
+.amazon .popup-copy {
+    background-color: #FFD814 !important;
+    color: #0F1111 !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    height: 32px !important;
+    padding: 0 16px !important;
+    box-shadow: 0 2px 5px rgba(15, 17, 17, .15) !important;
+}
+
+.amazon .popup-close {
+    background-color: #FFA41C !important;
+    color: #0F1111 !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    height: 32px !important;
+    padding: 0 16px !important;
+    box-shadow: 0 2px 5px rgba(15, 17, 17, .15) !important;
+}
+
+/* Update popup buttons container */
+.popup-buttons {
+    display: flex !important;
+    justify-content: flex-end !important;
+    gap: 8px !important;
+    /* Reduced gap between buttons */
+    margin-top: 15px !important;
+    padding-top: 15px !important;
+    border-top: 1px solid #eee !important;
+}
+
+/* EK Affiliaters green accent for the in-page result popup (active site = EK).
+   Higher specificity than the per-platform .popup-copy rules so green wins. */
+.deal-popup.site-ekaro .popup-header {
+    border-bottom-color: rgb(34, 154, 22) !important;
+}
+
+.deal-popup.site-ekaro .popup-header h3 {
+    color: rgb(34, 154, 22) !important;
+}
+
+.deal-popup.site-ekaro .popup-copy {
+    background-color: rgb(34, 154, 22) !important;
+    color: #FFFFFF !important;
+}
+
+.deal-popup.site-ekaro .popup-copy:hover {
+    background-color: rgb(26, 120, 16) !important;
+    opacity: 1 !important;
+}

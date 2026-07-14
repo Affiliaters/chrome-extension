@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <rect width="720" height="300" rx="16" fill="#eef2f7"/>
+
+  <!-- Card 1: Open & sign in -->
+  <rect x="30" y="64" width="196" height="200" rx="14" fill="#ffffff" stroke="#e5e7eb"/>
+  <circle cx="58" cy="96" r="16" fill="#2563eb"/>
+  <text x="58" y="101" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+  <text x="82" y="101" font-size="14" font-weight="700" fill="#1f2937">Open &amp; sign in</text>
+  <rect x="50" y="122" width="156" height="26" rx="8" fill="#2563eb"/>
+  <text x="128" y="139" font-size="11" font-weight="600" fill="#ffffff" text-anchor="middle">Choose platform</text>
+  <rect x="64" y="162" width="128" height="26" rx="6" fill="#ffffff" stroke="#2563eb"/>
+  <text x="128" y="179" font-size="11" fill="#1f2937" text-anchor="middle">Affiliaters</text>
+  <rect x="64" y="196" width="128" height="26" rx="6" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="128" y="213" font-size="11" fill="#6b7280" text-anchor="middle">EK Affiliaters</text>
+
+  <!-- arrow 1 -->
+  <line x1="232" y1="164" x2="252" y2="164" stroke="#9ca3af" stroke-width="5" stroke-linecap="round"/>
+  <polygon points="252,155 268,164 252,173" fill="#9ca3af"/>
+
+  <!-- Card 2: Paste & Convert -->
+  <rect x="262" y="64" width="196" height="200" rx="14" fill="#ffffff" stroke="#e5e7eb"/>
+  <circle cx="290" cy="96" r="16" fill="#2563eb"/>
+  <text x="290" y="101" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+  <text x="314" y="101" font-size="14" font-weight="700" fill="#1f2937">Paste &amp; Convert</text>
+  <rect x="282" y="124" width="156" height="60" rx="8" fill="#f1f5f9" stroke="#e5e7eb"/>
+  <text x="296" y="150" font-size="11" fill="#9ca3af">paste product link…</text>
+  <rect x="282" y="196" width="156" height="30" rx="8" fill="#2563eb"/>
+  <text x="360" y="216" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Convert</text>
+
+  <!-- arrow 2 -->
+  <line x1="464" y1="164" x2="484" y2="164" stroke="#9ca3af" stroke-width="5" stroke-linecap="round"/>
+  <polygon points="484,155 500,164 484,173" fill="#9ca3af"/>
+
+  <!-- Card 3: Copy or share -->
+  <rect x="494" y="64" width="196" height="200" rx="14" fill="#ffffff" stroke="#e5e7eb"/>
+  <circle cx="522" cy="96" r="16" fill="#16a34a"/>
+  <text x="522" y="101" font-size="16" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+  <text x="546" y="101" font-size="14" font-weight="700" fill="#1f2937">Copy or share</text>
+  <rect x="514" y="130" width="156" height="28" rx="14" fill="#eef2f7"/>
+  <text x="592" y="148" font-size="11" fill="#374151" text-anchor="middle">aff.link/xyz</text>
+  <circle cx="592" cy="200" r="20" fill="#16a34a"/>
+  <path d="M583 200 l6 6 l12 -12" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="592" y="242" font-size="11" fill="#6b7280" text-anchor="middle">saved to History</text>
+</svg>
