@@ -107,6 +107,41 @@
                     <p class="settings-section-note">Show the Convert buttons on these shopping sites. Off by default.</p>
                     <div class="retailer-toggles" id="retailerToggles"></div>
                 </div>
+
+                <div class="settings-section">
+                    <div class="settings-section-title">Message format</div>
+                    <p class="settings-section-note">Tap a tag to insert it at your cursor. Leave blank for the default.</p>
+                    <div class="template-tokens" id="dealTemplateTokens">
+                        <button type="button" class="token-chip" data-token="{{title}}">title</button>
+                        <button type="button" class="token-chip" data-token="{{price}}">price</button>
+                        <button type="button" class="token-chip" data-token="{{mrp}}">mrp</button>
+                        <button type="button" class="token-chip" data-token="{{link}}">link</button>
+                        <button type="button" class="token-chip" data-token="{{coupon}}">coupon</button>
+                        <button type="button" class="token-chip" data-token="{{finalprice}}">finalprice</button>
+                        <button type="button" class="token-chip" data-token="{{discount}}">discount</button>
+                        <button type="button" class="token-chip" data-token="{{off}}">off</button>
+                    </div>
+                    <textarea id="dealTemplate" class="template-input" rows="7"
+                        placeholder="Loading default…" spellcheck="false"></textarea>
+                    <details class="template-help">
+                        <summary>How tags work</summary>
+                        <ul>
+                            <li><code>{{link}}</code> is required — the affiliate link is placed here.</li>
+                            <li><code>{{coupon}}</code>/<code>{{mrp}}</code>/<code>{{discount}}</code>/<code>{{off}}</code> appear only when the site provides them; a line with only empty tags is removed (no “MRP: ” left behind).</li>
+                            <li><code>{{finalprice}}</code> = price after the coupon (Amazon only) — e.g. ₹649 with “5% coupon” → ₹617.</li>
+                            <li>Limit length: <code>{{title[40]}}</code> trims to 40 chars and adds “...”.</li>
+                            <li>Fallback: <code>{{mrp|N/A}}</code> shows “N/A” when empty.</li>
+                        </ul>
+                    </details>
+                    <div class="template-actions">
+                        <button type="button" class="btn-template-save" id="dealTemplateSave">
+                            <i class="fas fa-save"></i> Save format
+                        </button>
+                        <button type="button" class="btn-template-reset" id="dealTemplateReset">
+                            <i class="fas fa-rotate-left"></i> Reset to default
+                        </button>
+                    </div>
+                </div>
             </section>
 
             <!-- WHATSAPP: session transfer (nav item only appears on WhatsApp Web) -->
