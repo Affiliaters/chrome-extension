@@ -2399,34 +2399,57 @@ body.dark-theme .toggle-label {
 }
 
 /* Non-blocking "new version available" banner (top of extension pages) */
+/* Floating overlay — position: fixed so it never consumes layout height and
+   can't push the header/bottom-nav out of the fixed-size popup window. */
 .update-banner {
+    position: fixed;
+    top: 10px;
+    left: 12px;
+    right: 12px;
+    z-index: 100000;
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 10px 14px;
-    background: var(--primary-color);
+    padding: 11px 12px 11px 14px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
     color: #fff;
     font-size: 13px;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.28);
+    animation: updateBannerIn 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes updateBannerIn {
+    from { opacity: 0; transform: translateY(-14px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
 .update-banner-icon {
     font-size: 14px;
     flex-shrink: 0;
+    opacity: 0.95;
 }
 
 .update-banner-text {
     flex: 1;
+    font-weight: 500;
+    line-height: 1.3;
 }
 
 .update-banner-download {
-    color: #fff;
+    color: var(--primary-color);
+    background: #fff;
     font-weight: 600;
-    text-decoration: underline;
+    text-decoration: none;
     white-space: nowrap;
+    padding: 5px 12px;
+    border-radius: 999px;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.update-banner-download:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .update-banner-close {
@@ -2438,6 +2461,12 @@ body.dark-theme .toggle-label {
     cursor: pointer;
     padding: 0 2px;
     flex-shrink: 0;
+    opacity: 0.85;
+    transition: opacity 0.12s ease;
+}
+
+.update-banner-close:hover {
+    opacity: 1;
 }
 
 /* WhatsApp session-transfer tab (only shown when the open tab is WhatsApp Web) */
