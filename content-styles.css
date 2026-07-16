@@ -911,3 +911,123 @@ nav,
     background-color: rgb(26, 120, 16) !important;
     opacity: 1 !important;
 }
+
+/* ---- Autopost on-page indicator (bottom-right) ---- */
+.aff-autopost-indicator {
+    position: fixed !important;
+    bottom: 20px !important;
+    right: 20px !important;
+    z-index: 2147483646 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    max-width: 320px !important;
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+    background: #ffffff !important;
+    color: #1f2937 !important;
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.18) !important;
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    border-left: 4px solid #9ca3af !important;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif !important;
+    line-height: 1.35 !important;
+    animation: affApSlideIn 0.25s ease-out !important;
+    box-sizing: border-box !important;
+}
+
+@keyframes affApSlideIn {
+    from { transform: translateY(12px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.aff-autopost-indicator .aff-ap-dot {
+    flex: 0 0 auto !important;
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+    background: #9ca3af !important;
+}
+
+.aff-autopost-indicator .aff-ap-text { flex: 1 1 auto !important; min-width: 0 !important; }
+
+.aff-autopost-indicator .aff-ap-title {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #111827 !important;
+    margin: 0 0 1px !important;
+}
+
+.aff-autopost-indicator .aff-ap-sub {
+    font-size: 12px !important;
+    color: #4b5563 !important;
+    margin: 0 !important;
+    word-break: break-word !important;
+}
+
+.aff-autopost-indicator .aff-ap-actions {
+    flex: 0 0 auto !important;
+    display: flex !important;
+    gap: 6px !important;
+}
+
+.aff-autopost-indicator .aff-ap-btn {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    border: none !important;
+    cursor: pointer !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    padding: 6px 10px !important;
+    border-radius: 8px !important;
+    line-height: 1 !important;
+}
+
+.aff-autopost-indicator .aff-ap-stop {
+    background: #f3f4f6 !important;
+    color: #b91c1c !important;
+}
+
+.aff-autopost-indicator .aff-ap-stop:hover { background: #fee2e2 !important; }
+
+.aff-autopost-indicator .aff-ap-retry {
+    background: #2563eb !important;
+    color: #ffffff !important;
+}
+
+.aff-autopost-indicator .aff-ap-retry:hover { background: #1d4ed8 !important; }
+
+/* Per-state accents */
+.aff-autopost-indicator.aff-ap-idle { border-left-color: #6b7280 !important; }
+.aff-autopost-indicator.aff-ap-idle .aff-ap-dot { background: #6b7280 !important; }
+
+.aff-autopost-indicator.aff-ap-working { border-left-color: #f59e0b !important; }
+.aff-autopost-indicator.aff-ap-working .aff-ap-dot {
+    background: #f59e0b !important;
+    animation: affApPulse 1s ease-in-out infinite !important;
+}
+
+.aff-autopost-indicator.aff-ap-done { border-left-color: #16a34a !important; }
+.aff-autopost-indicator.aff-ap-done .aff-ap-dot { background: #16a34a !important; }
+
+.aff-autopost-indicator.aff-ap-cooldown { border-left-color: #0ea5e9 !important; }
+.aff-autopost-indicator.aff-ap-cooldown .aff-ap-dot { background: #0ea5e9 !important; }
+
+.aff-autopost-indicator.aff-ap-error { border-left-color: #dc2626 !important; }
+.aff-autopost-indicator.aff-ap-error .aff-ap-dot { background: #dc2626 !important; }
+
+@keyframes affApPulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.45; transform: scale(0.8); }
+}
+
+@media (prefers-color-scheme: dark) {
+    .aff-autopost-indicator {
+        background: #1f2937 !important;
+        color: #f3f4f6 !important;
+        border-color: rgba(255, 255, 255, 0.08) !important;
+    }
+    .aff-autopost-indicator .aff-ap-title { color: #f9fafb !important; }
+    .aff-autopost-indicator .aff-ap-sub { color: #cbd5e1 !important; }
+    .aff-autopost-indicator .aff-ap-stop { background: #374151 !important; color: #fca5a5 !important; }
+    .aff-autopost-indicator .aff-ap-stop:hover { background: #4b2226 !important; }
+}

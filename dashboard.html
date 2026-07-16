@@ -86,10 +86,13 @@
                 <div class="history-list" id="allHistoryList"></div>
             </section>
 
-            <!-- SETTINGS: account, logout (+ room for more settings later) -->
+            <!-- SETTINGS: collapsible sections (Shopping sites open by default) -->
             <section class="tab-panel" id="tab-profile" hidden>
                 <div class="page-header">
                     <h1 class="page-title">Settings</h1>
+                    <button class="btn-logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
                 </div>
                 <div class="profile-card">
                     <div class="profile-avatar"><i class="fas fa-user-circle"></i></div>
@@ -98,50 +101,104 @@
                         <div class="profile-email" id="profileEmail">&mdash;</div>
                     </div>
                 </div>
-                <button class="btn-logout">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
 
-                <div class="settings-section">
-                    <div class="settings-section-title">On-page buttons</div>
-                    <p class="settings-section-note">Show the Convert buttons on these shopping sites. Off by default.</p>
-                    <div class="retailer-toggles" id="retailerToggles"></div>
-                </div>
+                <details class="settings-acc" open>
+                    <summary class="settings-acc-head">
+                        <span class="settings-acc-icon"><i class="fas fa-store"></i></span>
+                        <span class="settings-acc-titles">
+                            <span class="settings-acc-title">Shopping sites</span>
+                            <span class="settings-acc-sub">Convert buttons &amp; autopost per site</span>
+                        </span>
+                        <i class="fas fa-chevron-down settings-acc-caret"></i>
+                    </summary>
+                    <div class="settings-acc-body">
+                        <p class="settings-section-note">Turn on Convert buttons or Auto Post for each site. Both are off by default.</p>
+                        <table class="stores-table">
+                            <thead>
+                                <tr>
+                                    <th class="stores-col-site">Website</th>
+                                    <th class="stores-col-toggle">Convert Buttons</th>
+                                    <th class="stores-col-toggle">Auto Post</th>
+                                </tr>
+                            </thead>
+                            <tbody id="storesTableBody"></tbody>
+                        </table>
+                        <div class="stores-cooldown">
+                            <span class="stores-cooldown-label">Don’t repost the same product for</span>
+                            <select id="autopostCooldown" class="autopost-cooldown-select">
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="180">3 hours</option>
+                                <option value="360">6 hours</option>
+                                <option value="720">12 hours</option>
+                                <option value="1440">24 hours</option>
+                            </select>
+                        </div>
 
-                <div class="settings-section">
-                    <div class="settings-section-title">Message format</div>
-                    <p class="settings-section-note">Tap a tag to insert it at your cursor. Leave blank for the default.</p>
-                    <div class="template-tokens" id="dealTemplateTokens">
-                        <button type="button" class="token-chip" data-token="{{title}}">title</button>
-                        <button type="button" class="token-chip" data-token="{{price}}">price</button>
-                        <button type="button" class="token-chip" data-token="{{mrp}}">mrp</button>
-                        <button type="button" class="token-chip" data-token="{{link}}">link</button>
-                        <button type="button" class="token-chip" data-token="{{coupon}}">coupon</button>
-                        <button type="button" class="token-chip" data-token="{{finalprice}}">finalprice</button>
-                        <button type="button" class="token-chip" data-token="{{discount}}">discount</button>
-                        <button type="button" class="token-chip" data-token="{{off}}">off</button>
+                        <details class="autopost-how">
+                            <summary class="autopost-how-btn">
+                                <i class="fas fa-circle-question"></i>
+                                <span>How autopost will work?</span>
+                                <i class="fas fa-chevron-down autopost-how-caret"></i>
+                            </summary>
+                            <div class="autopost-how-body">
+                                <ol class="autopost-how-steps">
+                                    <li>Turn on <strong>Auto Post</strong> for any site above.</li>
+                                    <li>Open a <strong>product page</strong> on that site. The deal is posted <strong>automatically</strong> — no clicks — using your saved <strong>Message format</strong>.</li>
+                                    <li>It posts from the account you are <strong>logged in to</strong> (the one shown at the top). If you’re not logged in, it won’t post and shows an error instead.</li>
+                                    <li>A small box appears bottom-right: <em>Hunny on work…</em> → <em>Autopost completed</em>. Press <strong>Stop</strong> there anytime to turn it off for that site.</li>
+                                    <li>The <strong>same product won’t post again</strong> until the cooldown above passes (default 1 hour). After that, visiting it can post again.</li>
+                                    <li>It only runs on real <strong>product pages</strong> — never on search, category, or home pages.</li>
+                                </ol>
+                            </div>
+                        </details>
                     </div>
-                    <textarea id="dealTemplate" class="template-input" rows="7"
-                        placeholder="Loading default…" spellcheck="false"></textarea>
-                    <details class="template-help">
-                        <summary>How tags work</summary>
-                        <ul>
-                            <li><code>{{link}}</code> is required — the affiliate link is placed here.</li>
-                            <li><code>{{coupon}}</code>/<code>{{mrp}}</code>/<code>{{discount}}</code>/<code>{{off}}</code> appear only when the site provides them; a line with only empty tags is removed (no “MRP: ” left behind).</li>
-                            <li><code>{{finalprice}}</code> = price after the coupon (Amazon only) — e.g. ₹649 with “5% coupon” → ₹617.</li>
-                            <li>Limit length: <code>{{title[40]}}</code> trims to 40 chars and adds “...”.</li>
-                            <li>Fallback: <code>{{mrp|N/A}}</code> shows “N/A” when empty.</li>
-                        </ul>
-                    </details>
-                    <div class="template-actions">
-                        <button type="button" class="btn-template-save" id="dealTemplateSave">
-                            <i class="fas fa-save"></i> Save format
-                        </button>
-                        <button type="button" class="btn-template-reset" id="dealTemplateReset">
-                            <i class="fas fa-rotate-left"></i> Reset to default
-                        </button>
+                </details>
+
+                <details class="settings-acc">
+                    <summary class="settings-acc-head">
+                        <span class="settings-acc-icon"><i class="fas fa-comment-dots"></i></span>
+                        <span class="settings-acc-titles">
+                            <span class="settings-acc-title">Message format</span>
+                            <span class="settings-acc-sub">Customize the deal text</span>
+                        </span>
+                        <i class="fas fa-chevron-down settings-acc-caret"></i>
+                    </summary>
+                    <div class="settings-acc-body">
+                        <p class="settings-section-note">Tap a tag to insert it at your cursor. Leave blank for the default.</p>
+                        <div class="template-tokens" id="dealTemplateTokens">
+                            <button type="button" class="token-chip" data-token="{{title}}">title</button>
+                            <button type="button" class="token-chip" data-token="{{price}}">price</button>
+                            <button type="button" class="token-chip" data-token="{{mrp}}">mrp</button>
+                            <button type="button" class="token-chip" data-token="{{link}}">link</button>
+                            <button type="button" class="token-chip" data-token="{{coupon}}">coupon</button>
+                            <button type="button" class="token-chip" data-token="{{finalprice}}">finalprice</button>
+                            <button type="button" class="token-chip" data-token="{{discount}}">discount</button>
+                            <button type="button" class="token-chip" data-token="{{off}}">off</button>
+                        </div>
+                        <textarea id="dealTemplate" class="template-input" rows="7"
+                            placeholder="Loading default…" spellcheck="false"></textarea>
+                        <details class="template-help">
+                            <summary>How tags work</summary>
+                            <ul>
+                                <li><code>{{link}}</code> is required — the affiliate link is placed here.</li>
+                                <li><code>{{coupon}}</code>/<code>{{mrp}}</code>/<code>{{discount}}</code>/<code>{{off}}</code> appear only when the site provides them; a line with only empty tags is removed (no “MRP: ” left behind).</li>
+                                <li><code>{{finalprice}}</code> = price after the coupon (Amazon only) — e.g. ₹649 with “5% coupon” → ₹617; with no coupon it shows the normal price.</li>
+                                <li>Limit length: <code>{{title[40]}}</code> trims to 40 chars and adds “...”.</li>
+                                <li>Fallback: <code>{{mrp|N/A}}</code> shows “N/A” when empty.</li>
+                            </ul>
+                        </details>
+                        <div class="template-actions">
+                            <button type="button" class="btn-template-save" id="dealTemplateSave">
+                                <i class="fas fa-save"></i> Save format
+                            </button>
+                            <button type="button" class="btn-template-reset" id="dealTemplateReset">
+                                <i class="fas fa-rotate-left"></i> Reset to default
+                            </button>
+                        </div>
                     </div>
-                </div>
+                </details>
             </section>
 
             <!-- WHATSAPP: session transfer (nav item only appears on WhatsApp Web) -->
