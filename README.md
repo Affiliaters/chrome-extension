@@ -26,9 +26,6 @@ Turn any supported store link into your affiliate deal link — right from your 
 - **Auto Post** — turn on per store so product pages can convert and post automatically (with a cooldown you control).
 - **Product images** — optionally include the product image with shared posts.
 
-### Amazon Associates
-- **SiteStripe linking** — link your Amazon Associates account so Amazon short links keep working through the extension.
-
 ### Stay up to date
 - **Automatic updates** — run the one-time installer and the extension updates itself in the background (checks about every hour). No git required.
 - **Update alerts** — if you skip the installer, a red `!` badge and an in-app banner still tell you when a new version is out.
