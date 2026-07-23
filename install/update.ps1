@@ -1,18 +1,19 @@
 # update.ps1 — self-updater for the Affiliaters Deal Converter extension (Windows).
 #
-# Lives INSIDE the extension folder, so it needs no configured path: it updates
-# whatever folder it sits in. Run by the scheduled task that install.bat
+# Lives in install\ inside the extension folder. Updates the parent extension
+# folder (wherever the user put it). Run by the scheduled task that install.bat
 # registers (or manually: right-click -> Run with PowerShell). No git required.
 #
 # PowerShell parses the whole file before executing, so overwriting this script
 # mid-run (during the sync) is safe — no relaunch trick needed.
 
-$VersionUrl     = 'https://raw.githubusercontent.com/Affiliaters/chrome-extension/main/version.json'
+$VersionUrl     = 'https://raw.githubusercontent.com/Affiliaters/chrome-extension/main/config/version.json'
 $FallbackZipUrl = 'https://github.com/Affiliaters/chrome-extension/archive/refs/heads/main.zip'
 
-$ExtDir  = Split-Path -Parent $MyInvocation.MyCommand.Path
-$LogFile = Join-Path $ExtDir 'last-update.log'
-$WorkDir = $null
+$InstallDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ExtDir     = Split-Path -Parent $InstallDir
+$LogFile    = Join-Path $ExtDir 'last-update.log'
+$WorkDir    = $null
 
 function Write-Log([string]$Message) {
     $line = "[{0}] {1}" -f (Get-Date -Format 'yyyy-MM-dd HH:mm:ss'), $Message
@@ -25,7 +26,7 @@ Write-Log "updater started (folder: $ExtDir, os: Windows)"
 
 try {
     if (-not (Test-Path (Join-Path $ExtDir 'manifest.json'))) {
-        Write-Log 'ERROR: no manifest.json next to updater - aborting (folder moved or corrupted?)'
+        Write-Log 'ERROR: no manifest.json in extension folder - aborting (folder moved or corrupted?)'
         exit 1
     }
 

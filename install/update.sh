@@ -2,29 +2,30 @@
 #
 # update.sh — self-updater for the Affiliaters Deal Converter extension (macOS/Linux).
 #
-# Lives INSIDE the extension folder, so it needs no configured path: it updates
-# whatever folder it sits in. Run by the scheduled job that install.command
-# registers (or manually: bash update.sh). No git required — downloads the repo
-# ZIP with curl and syncs the contents over this folder.
+# Lives in install/ inside the extension folder. Updates the parent extension
+# folder (wherever the user put it). Run by the scheduled job that
+# install.command registers (or manually: bash install/update.sh).
+# No git required — downloads the repo ZIP with curl and syncs over this folder.
 #
-# Flow: read local manifest version -> fetch version.json from GitHub -> if a
-# newer version exists, download ZIP -> extract -> copy over this folder.
-# The running Chrome picks the new files up via the extension's own
-# runtime.reload() check (or on the next browser restart).
+# Flow: read local manifest version -> fetch config/version.json from GitHub ->
+# if newer, download ZIP -> extract -> copy over the extension folder.
+# Chrome picks up new files via the extension's runtime.reload() check
+# (or on the next browser restart).
 set -u
 
-VERSION_URL="https://raw.githubusercontent.com/Affiliaters/chrome-extension/main/version.json"
+VERSION_URL="https://raw.githubusercontent.com/Affiliaters/chrome-extension/main/config/version.json"
 FALLBACK_ZIP_URL="https://github.com/Affiliaters/chrome-extension/archive/refs/heads/main.zip"
 
 # ── Self-overwrite guard ─────────────────────────────────────────────────────
 # This script replaces ITSELF during the sync. Bash reads scripts incrementally,
 # so overwriting a running script can corrupt execution. First invocation copies
-# itself to a temp file and re-executes from there, passing the real folder.
+# itself to a temp file and re-executes from there, passing the real extension root.
 if [ -z "${AFF_UPDATER_RELAUNCHED:-}" ]; then
-    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    INSTALL_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    EXT_DIR="$(cd "$INSTALL_DIR/.." && pwd)"
     TMP_SELF="$(mktemp "${TMPDIR:-/tmp}/aff-updater.XXXXXX")"
     cp "${BASH_SOURCE[0]}" "$TMP_SELF"
-    AFF_UPDATER_RELAUNCHED=1 exec bash "$TMP_SELF" "$SCRIPT_DIR"
+    AFF_UPDATER_RELAUNCHED=1 exec bash "$TMP_SELF" "$EXT_DIR"
 fi
 
 EXT_DIR="${1:?extension directory argument missing}"
@@ -45,7 +46,7 @@ trap cleanup EXIT
 log "updater started (folder: $EXT_DIR, os: $(uname -s))"
 
 if [ ! -f "$EXT_DIR/manifest.json" ]; then
-    log "ERROR: no manifest.json next to updater — aborting (folder moved or corrupted?)"
+    log "ERROR: no manifest.json in extension folder — aborting (folder moved or corrupted?)"
     exit 1
 fi
 
@@ -122,7 +123,7 @@ if ! cp -R "$SRC_DIR"/. "$EXT_DIR"/; then
     log "ERROR: copy failed — extension folder may be partially updated"
     exit 1
 fi
-chmod +x "$EXT_DIR/update.sh" "$EXT_DIR/install.command" 2>/dev/null
+chmod +x "$EXT_DIR/install/update.sh" "$EXT_DIR/install/install.command" 2>/dev/null
 
 NEW_VER="$(json_field "$EXT_DIR/manifest.json" version)"
 log "updated to $NEW_VER — Chrome will switch over automatically (or on next browser restart)"

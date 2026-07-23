@@ -6,15 +6,37 @@ Turn any supported store link into your affiliate deal link — right from your 
 
 ---
 
-## ✨ What you get
+## ✨ What it can do
 
-- **On-page Convert buttons** on **Amazon.in, Flipkart, Myntra, Croma, and Shopsy** — *Convert Only* and *Convert & Share*.
-- **Popup + full Dashboard** — paste a link, convert instantly, and copy the result.
-- **Conversion history** — every link you convert is saved so you can find and re-copy it.
-- **WhatsApp linking** — connect your WhatsApp session to share deals.
-- **Amazon Associate linking** — link your Amazon SiteStripe account.
-- **Two platforms in one** — switch between **Affiliaters** and **EK Affiliaters**.
-- **Automatic update alerts** — the extension checks for new versions and tells you when to update.
+### Convert deals anywhere
+- **On-page Convert buttons** on **Amazon.in, Flipkart, Myntra, Croma, and Shopsy** — *Convert Only* (affiliate link, no post) and *Convert & Share* (convert + post to your channels).
+- **Popup + full Dashboard** — paste any store link, convert instantly, preview the deal image, and copy the result.
+- **Conversion history** — every link you convert is saved so you can find and re-copy it later.
+- **Two platforms in one** — switch between **Affiliaters** and **EK Affiliaters** without reinstalling.
+
+### Smart deal messages
+- **Custom message templates** — write your own deal text under Settings → Message format (price, MRP, discount %, coupon, bank offers, final price, and more).
+- **Reads the product page for you** — title, price, MRP, coupon line, and bank/card offers (Flipkart Best Value, Amazon card offers) so your posts stay accurate.
+- **Math & conditions** — calculate pay-after-offer prices (`{{math …}}`) and show lines only when they matter (`{{if off >= 20}}`, per-store blocks, etc.).
+
+### Share & automate
+- **WhatsApp session link** — connect WhatsApp Web so *Convert & Share* can post deals for you.
+- **WhatsApp automation** — on an open chat, auto-open store links in tabs, or forward messages straight to the converter (auto, manual ⚡ chip, or both).
+- **Telegram automation** — same options on Telegram Web: open links, forward to converter, attach post images, choose which stores, background/foreground tabs.
+- **Auto Post** — turn on per store so product pages can convert and post automatically (with a cooldown you control).
+- **Product images** — optionally include the product image with shared posts.
+
+### Amazon Associates
+- **SiteStripe linking** — link your Amazon Associates account so Amazon short links keep working through the extension.
+
+### Stay up to date
+- **Automatic updates** — run the one-time installer and the extension updates itself in the background (checks about every hour). No git required.
+- **Update alerts** — if you skip the installer, a red `!` badge and an in-app banner still tell you when a new version is out.
+
+### Control per store
+- Toggle **Convert buttons**, **Auto Post**, and **product Image** per shopping site.
+- Choose which buttons show on **product pages** vs **non-product / listing pages**.
+- Light / dark theme in the dashboard.
 
 ---
 
@@ -41,7 +63,7 @@ Click the puzzle-piece icon in the toolbar, **pin** *Affiliaters Deal Converter*
 ![Pin the extension and open it](docs/step-4-pin.svg)
 
 ### 5. Turn on auto-updates (recommended)
-In the extension folder, double-click **`install.bat`** (Windows) or **`install.command`** (macOS — if blocked, right-click → Open). Done once, the extension keeps itself up to date automatically. Details in [Updating](#-updating) below.
+In the extension folder, double-click **`install/install.bat`** (Windows) or **`install/install.command`** (macOS — if blocked, right-click → Open). Done once, the extension keeps itself up to date automatically. Details in [Updating](#-updating) below.
 
 That's it — the extension is installed and ready to use.
 
@@ -53,9 +75,9 @@ That's it — the extension is installed and ready to use.
 
 The extension folder includes its own updater — run the installer for your system **once**, from inside the extension folder (it works no matter where you keep the folder):
 
-- **Windows:** double-click **`install.bat`**
-- **macOS:** double-click **`install.command`** — if macOS blocks it, right-click it → **Open** → **Open**. (Or in Terminal: `bash install.command`)
-- **Linux:** run `bash install.command`
+- **Windows:** double-click **`install/install.bat`**
+- **macOS:** double-click **`install/install.command`** — if macOS blocks it, right-click it → **Open** → **Open**. (Or in Terminal: `bash install/install.command`)
+- **Linux:** run `bash install/install.command`
 
 That's it. From then on the extension **updates itself in the background** — it checks for new versions every hour and applies them without you doing anything, even if you never close your browser. No git or other tools required.
 
@@ -87,7 +109,7 @@ If you skip the installer, the extension still checks for new versions and shows
 
 ## 🔒 Privacy & permissions
 
-The extension needs access to the supported store sites (to add Convert buttons and read your affiliate details) and to the Affiliaters API (to convert links and save history). It only runs on those sites.
+The extension needs access to the supported store sites (Convert buttons + product details), WhatsApp Web / Telegram Web (session linking and automation), and the Affiliaters API (convert links, share, history). It only runs on those sites and your chosen platform.
 
 ---
 

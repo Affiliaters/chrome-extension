@@ -26,10 +26,10 @@
     "https://raw.githubusercontent.com/*"
   ],
   "background": {
-    "service_worker": "background.js"
+    "service_worker": "js/background.js"
   },
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "html/popup.html",
     "default_icon": "images/icon.png"
   },
   "content_scripts": [
@@ -42,13 +42,13 @@
         "https://*.shopsy.in/*"
       ],
       "css": [
-        "content-styles.css"
+        "css/content-styles.css"
       ],
       "js": [
-        "config.js",
-        "storage.js",
-        "floating-drag.js",
-        "content.js"
+        "js/config.js",
+        "js/storage.js",
+        "js/floating-drag.js",
+        "js/content.js"
       ]
     },
     {
@@ -56,13 +56,13 @@
         "https://web.telegram.org/*"
       ],
       "css": [
-        "content-styles.css"
+        "css/content-styles.css"
       ],
       "js": [
-        "config.js",
-        "storage.js",
-        "floating-drag.js",
-        "telegram.js"
+        "js/config.js",
+        "js/storage.js",
+        "js/floating-drag.js",
+        "js/telegram.js"
       ]
     },
     {
@@ -70,7 +70,7 @@
         "https://web.telegram.org/*"
       ],
       "js": [
-        "telegram-visibility.js"
+        "js/telegram-visibility.js"
       ],
       "run_at": "document_start",
       "world": "MAIN"
@@ -80,13 +80,13 @@
         "https://web.whatsapp.com/*"
       ],
       "css": [
-        "content-styles.css"
+        "css/content-styles.css"
       ],
       "js": [
-        "config.js",
-        "storage.js",
-        "floating-drag.js",
-        "whatsapp-listener.js"
+        "js/config.js",
+        "js/storage.js",
+        "js/floating-drag.js",
+        "js/whatsapp-listener.js"
       ]
     },
     {
@@ -94,7 +94,7 @@
         "https://web.whatsapp.com/*"
       ],
       "js": [
-        "whatsapp-visibility.js"
+        "js/whatsapp-visibility.js"
       ],
       "run_at": "document_start",
       "world": "MAIN"
