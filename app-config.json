@@ -5,5 +5,8 @@
         { "target": { "css": "h1" }, "mode": "after" }
       ]
     }
+  },
+  "whatsapp": {
+    "listener": {}
   }
 }

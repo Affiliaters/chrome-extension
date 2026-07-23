@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deal message template guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .guide-page {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 24px 18px 56px;
+            color: var(--text-color);
+            line-height: 1.55;
+        }
+        .guide-page h1 { font-size: 1.5rem; margin: 0 0 8px; }
+        .guide-page h2 {
+            font-size: 1.15rem;
+            margin: 32px 0 10px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border-color);
+        }
+        .guide-page h2:first-of-type { border-top: none; padding-top: 0; }
+        .guide-page h3 { font-size: 1rem; margin: 18px 0 8px; }
+        .guide-page p { margin: 0 0 10px; color: var(--text-secondary); }
+        .guide-page table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+            margin: 10px 0 16px;
+        }
+        .guide-page th, .guide-page td {
+            border: 1px solid var(--border-color);
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+        .guide-page th { background: var(--card-bg); }
+        .guide-page code {
+            font-size: 12px;
+            background: rgba(0,0,0,0.05);
+            padding: 1px 5px;
+            border-radius: 4px;
+        }
+        .guide-page pre {
+            margin: 8px 0 14px;
+            padding: 12px 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 12.5px;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .guide-page ul, .guide-page ol {
+            padding-left: 18px;
+            margin: 0 0 12px;
+            color: var(--text-secondary);
+        }
+        .guide-page li { margin: 4px 0; }
+        .guide-toc {
+            margin: 16px 0 8px;
+            padding: 12px 14px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 13px;
+        }
+        .guide-toc strong { display: block; margin-bottom: 6px; color: var(--text-color); }
+        .guide-toc a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-right: 12px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        .guide-toc a:hover { text-decoration: underline; }
+        .guide-back { margin-bottom: 16px; font-size: 13px; }
+        .guide-back a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
+        .guide-note {
+            margin: 10px 0 14px;
+            padding: 10px 12px;
+            border-left: 3px solid var(--primary-color);
+            background: rgba(0,0,0,0.03);
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="guide-page">
+        <p class="guide-back"><a href="dashboard.html">← Back to dashboard</a></p>
+        <h1>Deal message template guide</h1>
+        <p>Customize the text posted for each deal under <strong>Settings → Message format</strong>. Tap chips to insert tags, or type them yourself. Errors appear under the editor and block Save until fixed.</p>
+
+        <nav class="guide-toc" aria-label="Contents">
+            <strong>Contents</strong>
+            <a href="#variables">Variables</a>
+            <a href="#basics">Basics</a>
+            <a href="#math">Math</a>
+            <a href="#compose">Compose</a>
+            <a href="#if-else">If / else</a>
+            <a href="#website">Per-site</a>
+            <a href="#full-templates">Full templates</a>
+            <a href="#mistakes">Common mistakes</a>
+        </nav>
+
+        <h2 id="variables">Variables</h2>
+        <table>
+            <thead>
+                <tr><th>Tag</th><th>Purpose</th><th>Example</th><th>Empty when</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>{{title}}</code></td><td>Product or page title</td><td>BOSCH 7 kg Steam…</td><td>Title missing</td></tr>
+                <tr><td><code>{{price}}</code></td><td>Selling price</td><td>₹27990</td><td>No price / OOS</td></tr>
+                <tr><td><code>{{mrp}}</code></td><td>List / struck price</td><td>₹49990</td><td>No MRP or MRP ≤ price</td></tr>
+                <tr><td><code>{{link}}</code></td><td>Product URL (required)</td><td>affiliate URL after convert</td><td>—</td></tr>
+                <tr><td><code>{{discount}}</code></td><td>₹ saved vs MRP</td><td>₹22000</td><td>No usable MRP</td></tr>
+                <tr><td><code>{{off}}</code></td><td>% off vs MRP</td><td>44%</td><td>No usable MRP</td></tr>
+                <tr><td><code>{{coupon}}</code></td><td>Amazon / Flipkart / Myntra coupon line</td><td>Apply 5% coupon / Apply ₹16499 coupon</td><td>No coupon</td></tr>
+                <tr><td><code>{{coupon_amt}}</code></td><td>₹ value of that coupon</td><td>₹50</td><td>No coupon</td></tr>
+                <tr><td><code>{{finalprice}}</code></td><td>Price after coupon (when present)</td><td>₹617</td><td>See Settings help</td></tr>
+                <tr><td><code>{{card_bank}}</code></td><td>Flipkart Best Value / Amazon cardification bank</td><td>Flipkart Axis / Amazon Pay ICICI</td><td>No bank offer</td></tr>
+                <tr><td><code>{{card_type}}</code></td><td>Credit / Debit / Credit/Debit</td><td>Credit</td><td>Same</td></tr>
+                <tr><td><code>{{card_offer}}</code></td><td>Full bank/card offer line</td><td>₹4000 off • Flipkart Axis • Credit Card • Cashback</td><td>Same</td></tr>
+                <tr><td><code>{{card_off}}</code></td><td>Best single display</td><td>10% or ₹4000</td><td>Same</td></tr>
+                <tr><td><code>{{card_off_pct}}</code></td><td>Bank offer % (number)</td><td>10</td><td>Same</td></tr>
+                <tr><td><code>{{card_off_amt}}</code></td><td>Bank offer ₹ amount</td><td>₹4000</td><td>Same</td></tr>
+                <tr><td><code>{{website}}</code></td><td>Retailer id</td><td>amazon / flipkart / myntra / croma / shopsy</td><td>Unknown host</td></tr>
+            </tbody>
+        </table>
+        <p><strong>MRP %:</strong> <code>off = round((mrp − price) / mrp × 100)</code>.</p>
+        <p><strong>Coupon:</strong> <code>coupon</code> is the text line; <code>coupon_amt</code> is the ₹ amount parsed from it (from <code>%</code> or flat ₹). Used in <code>{{math}}</code> as <code>coupon</code>. Flipkart uses the Coupons / “Save ₹X extra” row (same <code>Apply ₹X coupon</code> shape as Amazon).</p>
+        <p><strong>Card offers:</strong> Flipkart <em>Best value for you</em> and Amazon mobile <em>cardification</em> cashback cards — <strong>non-EMI</strong> only. Same <code>card_*</code> keys on both sites. Warm/fetch runs only when nested <code>{{if}}</code> can reach those keys for the current site (website / price / mrp / off checked).</p>
+
+        <h2 id="basics">Basics</h2>
+        <ul>
+            <li><code>{{link}}</code> is required — the converter places the affiliate URL here.</li>
+            <li>A line whose tags are all empty is dropped (no leftover <code>MRP: </code>).</li>
+            <li>Truncate: <code>{{title[40]}}</code> trims to 40 chars and adds “...”.</li>
+            <li>Fallback: <code>{{mrp|N/A}}</code> shows “N/A” when empty.</li>
+            <li>Product vs listing prefixes: <code>{{'Price: ', 'Starts from: ', price}}</code> — product page vs list page wording.</li>
+            <li>Use <code>{{'@ ', price}}</code> (2-part) to show on product pages and hide on list pages.</li>
+        </ul>
+
+        <h2 id="math">Math</h2>
+        <p>Compute a number from fields. Only <code>+ - * / ( )</code>, numbers, and known numeric fields — no JavaScript.</p>
+<pre>{{math price - coupon - card_off}}
+{{math price - card_off}}
+{{math finalprice - card_off_amt}}</pre>
+        <ul>
+            <li>In math, <code>coupon</code> = ₹ coupon amount; <code>card_off</code> = ₹ bank off (<code>card_off_amt</code>, or <code>price × card_off_pct / 100</code> when only %).</li>
+            <li>Money results format as ₹. Result ≤ 0 or missing <code>price</code> → empty (line can drop).</li>
+            <li>Missing optional subtractors (no coupon / no card) count as <strong>0</strong>.</li>
+        </ul>
+<pre>{{if card_off_pct >= 5}}
+Pay {{math price - card_off}}
+{{endif}}</pre>
+        <p>Allowed fields: <code>price</code>, <code>mrp</code>, <code>discount</code>, <code>off</code>, <code>finalprice</code>, <code>coupon</code>, <code>coupon_amt</code>, <code>card_off</code>, <code>card_off_pct</code>, <code>card_off_amt</code>.</p>
+
+        <h2 id="compose">Compose</h2>
+        <p>Mix quoted text and field names into one line:</p>
+<pre>{{compose 'Apply ', card_bank, ' ', card_type, ' to get ', card_off}}
+→ Apply HDFC Credit to get 10%
+   (or Apply Flipkart Axis Credit to get ₹4000)</pre>
+        <p>More examples:</p>
+<pre>{{compose 'Price: ', price, ' (was ', mrp, ')'}}
+{{compose title, ' — ', off, ' off'}}
+{{compose 'Bank: ', card_bank, ' · ', card_offer}}
+{{compose 'Save ', discount, ' (', off, ')'}}</pre>
+        <div class="guide-note">
+            Empty fields become blank (spaces collapse). If <em>every</em> field in the compose is empty, the whole compose is empty and the line can drop. Prefer wrapping with <code>{{if card_off}}</code> or putting compose inside a site block when you only want it sometimes.
+        </div>
+
+        <h2 id="if-else">If / else / endif</h2>
+<pre>{{if CONDITION}}
+…shown when true…
+{{else}}
+…shown when false (optional)…
+{{endif}}</pre>
+
+        <h3>Presence (non-empty)</h3>
+        <table>
+            <thead>
+                <tr><th>Condition</th><th>True when</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><code>price</code></td><td>Selling price present</td></tr>
+                <tr><td><code>mrp</code></td><td>MRP present</td></tr>
+                <tr><td><code>coupon</code></td><td>Coupon text present</td></tr>
+                <tr><td><code>off</code> / <code>discount</code></td><td>MRP discount computable</td></tr>
+                <tr><td><code>card_bank</code> / <code>card_type</code> / <code>card_offer</code></td><td>That card field present</td></tr>
+                <tr><td><code>card_off_pct</code> / <code>card_off_amt</code></td><td>Bank % / ₹ known</td></tr>
+                <tr><td><code>website</code></td><td>Retailer id known</td></tr>
+            </tbody>
+        </table>
+
+        <h3>Numeric comparisons</h3>
+        <p>Ops: <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> <code>=</code> <code>!=</code> with a number:</p>
+<pre>{{if off >= 20}}
+Mega deal — {{off}} off MRP
+{{endif}}
+
+{{if card_off_pct >= 5}}
+{{compose 'Apply ', card_bank, ' ', card_type, ' to get ', card_off}}
+{{endif}}
+
+{{if price}}
+Price: {{price}}
+{{else}}
+Price: check link
+{{endif}}</pre>
+
+        <h2 id="website">Per-site (<code>website</code>)</h2>
+        <p><code>{{website}}</code> is the retailer id: <code>amazon</code>, <code>flipkart</code>, <code>myntra</code>, <code>croma</code>, <code>shopsy</code>.</p>
+        <p>Match by id <strong>or</strong> base URL (subdomains included). <strong>Quotes are required</strong> (<code>'…'</code> or <code>"…"</code>):</p>
+<pre>{{if website = 'amazon'}}
+{{if website = "amazon"}}
+{{if website = 'https://amazon.in'}}
+{{if website = 'amazon.in'}}
+{{if website != 'flipkart'}}</pre>
+        <p><code>'https://amazon.in'</code> / <code>'amazon.in'</code> matches <code>amazon.in</code>, <code>www.amazon.in</code>, <code>m.amazon.in</code>, etc.</p>
+
+        <h3>Amazon style with title+link fallback</h3>
+<pre>{{if website = 'amazon'}}
+{{title}}
+Price: {{price}}
+{{coupon}}
+{{link}}
+{{else}}
+{{title}}
+
+{{link}}
+{{endif}}</pre>
+
+        <h3>Nested site + condition</h3>
+<pre>{{if website = 'flipkart'}}
+{{if price >= 5000}}
+Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon_amt - card_off}}
+{{endif}}
+{{endif}}</pre>
+
+        <h3>Separate blocks per site</h3>
+        <p>Also fine — one block after another. Empty compose drops itself if there is no card offer.</p>
+<pre>{{if website = 'flipkart'}}
+{{title}}
+Price: {{price}}
+{{compose 'Apply ', card_bank, ' ', card_type, ' to get ', card_off}}
+{{link}}
+{{endif}}
+{{if website = 'https://amazon.in'}}
+{{title}} @ {{price}}
+{{link}}
+{{endif}}</pre>
+
+        <div class="guide-note">
+            <strong>Rules:</strong> one <code>{{else}}</code> per <code>{{if}}</code>; nested <code>{{if}}</code> is supported. Close every block with <code>{{endif}}</code>. Bare <code>{{if website = amazon}}</code> (no quotes) is invalid — Save will show an error.
+        </div>
+
+        <h2 id="full-templates">Full templates</h2>
+
+        <h3>Simple + optional card offer</h3>
+<pre>{{title}}
+
+{{if price}}
+Price: {{price}}
+{{endif}}
+{{coupon}}
+{{if card_off_pct >= 5}}
+{{compose 'Apply ', card_bank, ' ', card_type, ' to get ', card_off}}
+Pay {{math price - card_off}}
+{{endif}}
+
+Buy Now: {{link}}</pre>
+
+        <h3>Gate on MRP %</h3>
+<pre>{{title}}
+
+{{if off >= 20}}
+🔥 {{off}} off — was {{mrp}}, now {{price}}
+{{endif}}
+{{if price}}
+Price: {{price}}
+{{endif}}
+
+Buy Now: {{link}}</pre>
+
+        <h3>Raw Flipkart Best Value line</h3>
+<pre>{{title}}
+Price: {{price}}
+{{if card_offer}}
+{{card_offer}}
+{{endif}}
+Buy Now: {{link}}</pre>
+
+        <h3>Card ₹ amount only</h3>
+<pre>{{if card_off_amt}}
+Bank offer: {{card_off_amt}} off with {{card_bank}} {{card_type}}
+{{endif}}</pre>
+
+        <h2 id="mistakes">Common mistakes</h2>
+        <table>
+            <thead>
+                <tr><th>Mistake</th><th>Fix</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Missing <code>{{link}}</code></td><td>Add <code>Buy Now: {{link}}</code></td></tr>
+                <tr><td>Unclosed <code>{{if}}</code></td><td>Add matching <code>{{endif}}</code></td></tr>
+                <tr><td><code>{{if foo}}</code></td><td>Use a known field name</td></tr>
+                <tr><td><code>{{if off &gt; }}</code></td><td>Need a number: <code>{{if off &gt;= 20}}</code></td></tr>
+                <tr><td><code>{{if website = amazon}}</code> (no quotes)</td><td>Use <code>{{if website = 'amazon'}}</code></td></tr>
+                <tr><td>Compose typo <code>banc</code></td><td>Use <code>card_bank</code></td></tr>
+                <tr><td>Unclosed quote in compose</td><td>Match <code>'</code> / <code>"</code> pairs</td></tr>
+                <tr><td><code>{{math price - title}}</code></td><td>Only numeric fields — use <code>price</code>, <code>coupon</code>, <code>card_off</code>, …</td></tr>
+            </tbody>
+        </table>
+        <p>The Message format editor lists these errors under the textarea and blocks Save until they are fixed.</p>
+    </div>
+</body>
+</html>

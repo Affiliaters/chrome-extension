@@ -933,6 +933,38 @@ nav,
     line-height: 1.35 !important;
     animation: affApSlideIn 0.25s ease-out !important;
     box-sizing: border-box !important;
+    transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    touch-action: none !important;
+}
+
+.aff-autopost-indicator.aff-has-share-btn:not(.aff-float-placed) {
+    bottom: 84px !important;
+}
+
+.aff-autopost-indicator.aff-has-share-btns-stack:not(.aff-float-placed) {
+    bottom: 140px !important;
+}
+
+.aff-draggable {
+    cursor: grab !important;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+}
+
+.aff-draggable.aff-dragging {
+    cursor: grabbing !important;
+    transition: none !important;
+    opacity: 0.92 !important;
+}
+
+.aff-draggable button,
+.aff-draggable a,
+.aff-draggable input {
+    cursor: pointer !important;
+}
+
+.aff-float-placed {
+    animation: none !important;
 }
 
 @keyframes affApSlideIn {
@@ -996,6 +1028,14 @@ nav,
 
 .aff-autopost-indicator .aff-ap-retry:hover { background: #1d4ed8 !important; }
 
+/* Telegram panel Start button (green) — reuses the shared indicator chrome. */
+.aff-autopost-indicator .aff-ap-start {
+    background: #16a34a !important;
+    color: #ffffff !important;
+}
+
+.aff-autopost-indicator .aff-ap-start:hover { background: #15803d !important; }
+
 /* Per-state accents */
 .aff-autopost-indicator.aff-ap-idle { border-left-color: #6b7280 !important; }
 .aff-autopost-indicator.aff-ap-idle .aff-ap-dot { background: #6b7280 !important; }
@@ -1015,6 +1055,9 @@ nav,
 .aff-autopost-indicator.aff-ap-error { border-left-color: #dc2626 !important; }
 .aff-autopost-indicator.aff-ap-error .aff-ap-dot { background: #dc2626 !important; }
 
+.aff-autopost-indicator.aff-ap-skipped { border-left-color: #f97316 !important; }
+.aff-autopost-indicator.aff-ap-skipped .aff-ap-dot { background: #f97316 !important; }
+
 @keyframes affApPulse {
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.45; transform: scale(0.8); }
@@ -1030,4 +1073,251 @@ nav,
     .aff-autopost-indicator .aff-ap-sub { color: #cbd5e1 !important; }
     .aff-autopost-indicator .aff-ap-stop { background: #374151 !important; color: #fca5a5 !important; }
     .aff-autopost-indicator .aff-ap-stop:hover { background: #4b2226 !important; }
+}
+
+/* ---- Telegram "forward" mode: per-message ⚡ Convert chip ---------------- */
+/* Injected into a message bubble by telegram.js when forward + manual/both is on.
+   The bubble gets .aff-tg-has-btn so the absolutely-positioned chip anchors to it. */
+.aff-tg-has-btn { position: relative !important; }
+
+.aff-tg-msg-btn {
+    position: absolute !important;
+    top: 4px !important;
+    right: 4px !important;
+    z-index: 5 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 3px 8px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    color: #ffffff !important;
+    background: #16a34a !important;
+    border: none !important;
+    border-radius: 999px !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+    cursor: pointer !important;
+    opacity: 0 !important;
+    transition: opacity 0.15s ease, background 0.15s ease !important;
+}
+
+/* Reveal on bubble hover; keep visible while focused/disabled (mid-send). */
+.aff-tg-has-btn:hover .aff-tg-msg-btn,
+.aff-tg-msg-btn:focus,
+.aff-tg-msg-btn:disabled { opacity: 1 !important; }
+
+.aff-tg-msg-btn:hover { background: #15803d !important; }
+.aff-tg-msg-btn:disabled { cursor: default !important; background: #6b7280 !important; }
+
+/* ---- WhatsApp "forward" mode: per-message ⚡ Convert chip ---------------- */
+.aff-wa-has-btn { position: relative !important; }
+
+.aff-wa-msg-btn {
+    position: absolute !important;
+    top: 4px !important;
+    right: 4px !important;
+    z-index: 5 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 3px 8px !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    color: #ffffff !important;
+    background: #16a34a !important;
+    border: none !important;
+    border-radius: 999px !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+    cursor: pointer !important;
+    opacity: 0 !important;
+    transition: opacity 0.15s ease, background 0.15s ease !important;
+}
+
+.aff-wa-has-btn:hover .aff-wa-msg-btn,
+.aff-wa-msg-btn:focus,
+.aff-wa-msg-btn:disabled { opacity: 1 !important; }
+
+.aff-wa-msg-btn:hover { background: #15803d !important; }
+.aff-wa-msg-btn:disabled { cursor: default !important; background: #6b7280 !important; }
+
+/* Floating Share Page Button */
+.aff-share-page-btns {
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    z-index: 2147483647 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+    touch-action: none !important;
+}
+
+.aff-share-page-btn {
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    z-index: auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    padding: 12px 20px !important;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    border: none !important;
+    border-radius: 50px !important;
+    cursor: pointer !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    white-space: nowrap !important;
+}
+
+/* Standalone legacy single button (no wrapper) */
+body > .aff-share-page-btn {
+    position: fixed !important;
+    bottom: 24px !important;
+    right: 24px !important;
+    z-index: 2147483647 !important;
+}
+
+/* Amazon Theme */
+.aff-share-page-btn.amazon,
+.aff-share-page-btn.amazon.convert-share-btn {
+    background: #FFD814 !important;
+    color: #0F1111 !important;
+    box-shadow: 0 4px 15px rgba(255, 216, 20, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.amazon:hover,
+.aff-share-page-btn.amazon.convert-share-btn:hover {
+    background: #F7CA00 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 216, 20, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.amazon.convert-only-btn {
+    background: #232F3E !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(35, 47, 62, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.amazon.convert-only-btn:hover {
+    background: #37475A !important;
+    box-shadow: 0 6px 20px rgba(35, 47, 62, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Flipkart Theme */
+.aff-share-page-btn.flipkart,
+.aff-share-page-btn.flipkart.convert-share-btn {
+    background: #2874F0 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(40, 116, 240, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.flipkart:hover,
+.aff-share-page-btn.flipkart.convert-share-btn:hover {
+    background: #1455C0 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(40, 116, 240, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.flipkart.convert-only-btn {
+    background: #fb641b !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(251, 100, 27, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.flipkart.convert-only-btn:hover {
+    background: #e55a16 !important;
+    box-shadow: 0 6px 20px rgba(251, 100, 27, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Myntra Theme */
+.aff-share-page-btn.myntra,
+.aff-share-page-btn.myntra.convert-share-btn {
+    background: #FF3F6C !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(255, 63, 108, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.myntra:hover,
+.aff-share-page-btn.myntra.convert-share-btn:hover {
+    background: #FF527B !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 63, 108, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.myntra.convert-only-btn {
+    background: #282C3F !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(40, 44, 63, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.myntra.convert-only-btn:hover {
+    background: #3e4152 !important;
+    box-shadow: 0 6px 20px rgba(40, 44, 63, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Croma Theme */
+.aff-share-page-btn.croma,
+.aff-share-page-btn.croma.convert-share-btn {
+    background: #13E0A3 !important;
+    color: #0D0D0D !important;
+    box-shadow: 0 4px 15px rgba(19, 224, 163, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.croma:hover,
+.aff-share-page-btn.croma.convert-share-btn:hover {
+    background: #00b275 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(19, 224, 163, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.croma.convert-only-btn {
+    background: #1A1A1A !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(26, 26, 26, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.croma.convert-only-btn:hover {
+    background: #333333 !important;
+    box-shadow: 0 6px 20px rgba(26, 26, 26, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Shopsy Theme */
+.aff-share-page-btn.shopsy,
+.aff-share-page-btn.shopsy.convert-share-btn {
+    background: #FF4F00 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(255, 79, 0, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.shopsy:hover,
+.aff-share-page-btn.shopsy.convert-share-btn:hover {
+    background: #E03E00 !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(255, 79, 0, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.shopsy.convert-only-btn {
+    background: #1F2937 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 15px rgba(31, 41, 55, 0.35), 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+}
+.aff-share-page-btn.shopsy.convert-only-btn:hover {
+    background: #374151 !important;
+    box-shadow: 0 6px 20px rgba(31, 41, 55, 0.5), 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.aff-share-page-btn:active {
+    transform: translateY(0) !important;
+}
+
+.aff-share-page-btn:disabled,
+.aff-share-page-btn.aff-share-page-btn-disabled {
+    background: #e5e7eb !important;
+    color: #9ca3af !important;
+    box-shadow: none !important;
+    border: 1px solid #d1d5db !important;
+    cursor: not-allowed !important;
+    transform: none !important;
+}
+
+/* Spin animation for loading state */
+@keyframes aff-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.aff-share-page-btn .fa-spin {
+    animation: aff-spin 1s linear infinite !important;
 }

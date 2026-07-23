@@ -40,23 +40,37 @@ Click the puzzle-piece icon in the toolbar, **pin** *Affiliaters Deal Converter*
 
 ![Pin the extension and open it](docs/step-4-pin.svg)
 
+### 5. Turn on auto-updates (recommended)
+In the extension folder, double-click **`install.bat`** (Windows) or **`install.command`** (macOS — if blocked, right-click → Open). Done once, the extension keeps itself up to date automatically. Details in [Updating](#-updating) below.
+
 That's it — the extension is installed and ready to use.
 
 ---
 
 ## 🔄 Updating
 
-The extension checks this repo for new versions automatically. When one is available you'll see a **red `!` badge** on the icon and a **“New version available — Download”** banner when you open it.
+### Recommended: turn on automatic updates (one time, 10 seconds)
+
+The extension folder includes its own updater — run the installer for your system **once**, from inside the extension folder (it works no matter where you keep the folder):
+
+- **Windows:** double-click **`install.bat`**
+- **macOS:** double-click **`install.command`** — if macOS blocks it, right-click it → **Open** → **Open**. (Or in Terminal: `bash install.command`)
+- **Linux:** run `bash install.command`
+
+That's it. From then on the extension **updates itself in the background** — it checks for new versions every hour and applies them without you doing anything, even if you never close your browser. No git or other tools required.
+
+> If you ever **move the extension folder**, run the installer again from the new location (Chrome also requires re-loading a moved unpacked folder).
+> The file `last-update.log` inside the folder shows what the updater last did.
+
+### Manual update (fallback)
+
+If you skip the installer, the extension still checks for new versions and shows a **red `!` badge** on the icon and a **“New version available — Download”** banner when you open it.
 
 ![Update banner](docs/update-banner.svg)
 
-To update:
-
 1. Click **Download** on the banner (or use **`< > Code` → Download ZIP** here) and unzip it.
-2. Replace your old extension folder with the newly unzipped one.
-3. On `chrome://extensions`, press **Reload** on the extension card (or remove it and **Load unpacked** the new folder).
-
-> Chrome does not auto-update extensions installed this way, so updating is this quick manual step.
+2. Replace the **contents** of your old extension folder with the newly unzipped files.
+3. On `chrome://extensions`, press **Reload** on the extension card.
 
 ---
 

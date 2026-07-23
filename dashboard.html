@@ -46,6 +46,12 @@
                     <div class="input-area">
                         <textarea placeholder="Paste your deal text here..."></textarea>
                     </div>
+                    <div class="deal-image-preview" id="dealImagePreview" hidden>
+                        <img id="dealImageThumb" alt="Product image" referrerpolicy="no-referrer">
+                        <span class="deal-image-label">Image will be sent</span>
+                        <button type="button" class="deal-image-remove" id="dealImageRemove"
+                            aria-label="Don't send this image" title="Don't send this image">&times;</button>
+                    </div>
                     <div class="controls-area">
                         <label class="toggle-switch">
                             <input type="checkbox" id="convertOnlyToggle">
@@ -102,7 +108,7 @@
                     </div>
                 </div>
 
-                <details class="settings-acc" open>
+                <details class="settings-acc">
                     <summary class="settings-acc-head">
                         <span class="settings-acc-icon"><i class="fas fa-store"></i></span>
                         <span class="settings-acc-titles">
@@ -112,17 +118,12 @@
                         <i class="fas fa-chevron-down settings-acc-caret"></i>
                     </summary>
                     <div class="settings-acc-body">
-                        <p class="settings-section-note">Turn on Convert buttons or Auto Post for each site. Both are off by default.</p>
-                        <table class="stores-table">
-                            <thead>
-                                <tr>
-                                    <th class="stores-col-site">Website</th>
-                                    <th class="stores-col-toggle">Convert Buttons</th>
-                                    <th class="stores-col-toggle">Auto Post</th>
-                                </tr>
-                            </thead>
-                            <tbody id="storesTableBody"></tbody>
-                        </table>
+                        <p class="settings-section-note">Turn on Convert buttons, Auto Post, or product Image per site. All off by default.</p>
+                        <div class="stores-cards-container" id="storesCardsContainer"></div>
+                        <div id="autopostNonProductWarning" class="autopost-warning">
+                            <strong>Warning:</strong> Enabling "AP Non-Prod" for any website will automatically post a deal for <strong>every new page visit</strong> (e.g. search queries, categories, etc.) you browse on that website, unless you have visited that exact page within the cooldown period.
+                        </div>
+
                         <div class="stores-cooldown">
                             <span class="stores-cooldown-label">Don’t repost the same product for</span>
                             <select id="autopostCooldown" class="autopost-cooldown-select">
@@ -134,6 +135,62 @@
                                 <option value="720">12 hours</option>
                                 <option value="1440">24 hours</option>
                             </select>
+                        </div>
+
+                        <div class="convert-btn-visibility-settings" id="convertBtnVisibilitySettings">
+                            <div class="convert-btn-panel">
+                                <div class="convert-btn-panel-head">
+                                    <div class="convert-btn-panel-title">Product pages buttons</div>
+                                    <button type="button" class="convert-btn-help" aria-expanded="false" aria-controls="prodBtnHelpTip" title="What this does">
+                                        <i class="fas fa-circle-info" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="convert-btn-help-tip" id="prodBtnHelpTip" hidden>
+                                    Chooses which Convert buttons show on real product pages for every store.
+                                    <strong>Convert Only</strong> makes an affiliate link without posting.
+                                    <strong>Convert Share</strong> converts and posts to your channels.
+                                    At least one must stay on. The store’s Convert Button must also be on.
+                                </div>
+                                <div class="convert-btn-toggles">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="prodBtnConvertOnly" checked>
+                                        <span class="toggle-slider"></span>
+                                        <span class="toggle-label store-option-sublabel">Convert Only</span>
+                                    </label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="prodBtnConvertShare" checked>
+                                        <span class="toggle-slider"></span>
+                                        <span class="toggle-label store-option-sublabel">Convert Share</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="convert-btn-panel">
+                                <div class="convert-btn-panel-head">
+                                    <div class="convert-btn-panel-title">Non-product pages buttons</div>
+                                    <button type="button" class="convert-btn-help" aria-expanded="false" aria-controls="npBtnHelpTip" title="What this does">
+                                        <i class="fas fa-circle-info" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="convert-btn-help-tip" id="npBtnHelpTip" hidden>
+                                    Chooses which floating buttons show on search, category, and home pages for every store.
+                                    <strong>Convert Only</strong> makes an affiliate link without posting.
+                                    <strong>Convert Share</strong> converts and posts to your channels.
+                                    At least one must stay on. Requires Convert Button on for that store, and you must be logged in.
+                                </div>
+                                <div class="convert-btn-toggles">
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="npBtnConvertOnly" checked>
+                                        <span class="toggle-slider"></span>
+                                        <span class="toggle-label store-option-sublabel">Convert Only</span>
+                                    </label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="npBtnConvertShare" checked>
+                                        <span class="toggle-slider"></span>
+                                        <span class="toggle-label store-option-sublabel">Convert Share</span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
 
                         <details class="autopost-how">
@@ -172,13 +229,39 @@
                             <button type="button" class="token-chip" data-token="{{price}}">price</button>
                             <button type="button" class="token-chip" data-token="{{mrp}}">mrp</button>
                             <button type="button" class="token-chip" data-token="{{link}}">link</button>
-                            <button type="button" class="token-chip" data-token="{{coupon}}">coupon</button>
-                            <button type="button" class="token-chip" data-token="{{finalprice}}">finalprice</button>
                             <button type="button" class="token-chip" data-token="{{discount}}">discount</button>
                             <button type="button" class="token-chip" data-token="{{off}}">off</button>
+                            <button type="button" class="token-chip" data-token="{{coupon}}">coupon</button>
+                            <button type="button" class="token-chip" data-token="{{coupon_amt}}">coupon_amt</button>
+                            <button type="button" class="token-chip" data-token="{{finalprice}}">finalprice</button>
+                            <button type="button" class="token-chip" data-token="{{card_bank}}">card_bank</button>
+                            <button type="button" class="token-chip" data-token="{{card_type}}">card_type</button>
+                            <button type="button" class="token-chip" data-token="{{card_offer}}">card_offer</button>
+                            <button type="button" class="token-chip" data-token="{{card_off}}">card_off</button>
+                            <button type="button" class="token-chip" data-token="{{card_off_pct}}">card_off_pct</button>
+                            <button type="button" class="token-chip" data-token="{{card_off_amt}}">card_off_amt</button>
+                            <button type="button" class="token-chip" data-token="{{website}}">website</button>
+                            <button type="button" class="token-chip" data-token="{{math price - coupon - card_off}}">math</button>
+                            <button type="button" class="token-chip token-chip-snippet" data-token="{{if price}}&#10;Price: {{price}}&#10;{{endif}}">ifPrice</button>
+                            <button type="button" class="token-chip token-chip-snippet" data-token="{{if mrp}}&#10;MRP: {{mrp}} ({{off}} off)&#10;{{endif}}">ifMRP</button>
+                            <button type="button" class="token-chip token-chip-snippet" data-token="{{if off >= 20}}&#10;{{off}} off MRP&#10;{{endif}}">ifPriceMrp%</button>
+                            <button type="button" class="token-chip token-chip-snippet" data-token="{{if card_off_pct >= 5}}&#10;{{compose 'Apply ', card_bank, ' ', card_type, ' to get ', card_off}}&#10;{{endif}}">ifCardOff%</button>
+                            <button type="button" class="token-chip token-chip-snippet" data-token="{{if card_off_amt}}&#10;Bank off: {{card_off_amt}}&#10;{{endif}}">ifCardOff₹</button>
+                            <button type="button" class="token-chip token-chip-snippet" data-token="{{if card_off_pct >= 5}}&#10;Pay {{math price - card_off}}&#10;{{endif}}">math+ifCard%</button>
+                            <button type="button" class="token-chip token-chip-snippet" data-token="{{compose 'Apply ', card_bank, ' ', card_type, ' to get ', card_off}}">compose card</button>
+                            <button type="button" class="token-chip token-chip-snippet" data-token="{{if website = 'amazon'}}&#10;Amazon: {{title}}&#10;Price: {{price}}&#10;{{link}}&#10;{{else}}&#10;{{title}}&#10;&#10;{{link}}&#10;{{endif}}">ifWebsite</button>
                         </div>
                         <textarea id="dealTemplate" class="template-input" rows="7"
                             placeholder="Loading default…" spellcheck="false"></textarea>
+                        <ul id="dealTemplateErrors" class="template-errors" hidden></ul>
+                        <div class="template-actions">
+                            <button type="button" class="btn-template-save" id="dealTemplateSave">
+                                <i class="fas fa-save"></i> Save format
+                            </button>
+                            <button type="button" class="btn-template-reset" id="dealTemplateReset">
+                                <i class="fas fa-rotate-left"></i> Reset to default
+                            </button>
+                        </div>
                         <details class="template-help">
                             <summary>How tags work</summary>
                             <ul>
@@ -187,15 +270,258 @@
                                 <li><code>{{finalprice}}</code> = price after the coupon (Amazon only) — e.g. ₹649 with “5% coupon” → ₹617; with no coupon it shows the normal price.</li>
                                 <li>Limit length: <code>{{title[40]}}</code> trims to 40 chars and adds “...”.</li>
                                 <li>Fallback: <code>{{mrp|N/A}}</code> shows “N/A” when empty.</li>
+                                <li>Multi-page tags: <code>{{'Price: ', 'Starts from: ', price}}</code> (or <code>finalprice</code>) shows "Price: [value]" on products and "Starts from: [value]" on lists. Use <code>{{'@ ', price}}</code> (2-parts) to show on product pages and hide completely on list pages.</li>
                             </ul>
+
+                            <details class="template-help-nested">
+                                <summary>All variables</summary>
+                                <ul>
+                                    <li><code>{{title}}</code> — product/page title.</li>
+                                    <li><code>{{price}}</code> — selling price (e.g. ₹27990).</li>
+                                    <li><code>{{mrp}}</code> — list/struck price when higher than price.</li>
+                                    <li><code>{{link}}</code> — product URL (converted to affiliate link).</li>
+                                    <li><code>{{discount}}</code> — ₹ saved vs MRP (MRP − price).</li>
+                                    <li><code>{{off}}</code> — % off vs MRP (e.g. 44%). Use in <code>{{if off >= 20}}</code>.</li>
+                                    <li><code>{{coupon}}</code> — Amazon/Myntra coupon text when present.</li>
+                                    <li><code>{{coupon_amt}}</code> — ₹ value of that coupon (from % or flat ₹).</li>
+                                    <li><code>{{finalprice}}</code> — price after Amazon coupon math.</li>
+                                    <li><code>{{card_bank}}</code> — Flipkart Best Value bank (e.g. HDFC). Empty on other sites for now.</li>
+                                    <li><code>{{card_type}}</code> — Credit / Debit / Credit/Debit.</li>
+                                    <li><code>{{card_offer}}</code> — full Best Value offer line from Flipkart.</li>
+                                    <li><code>{{card_off}}</code> — best display: <code>10%</code> or <code>₹2250</code>.</li>
+                                    <li><code>{{card_off_pct}}</code> — numeric % (e.g. 10) for display/compare.</li>
+                                    <li><code>{{card_off_amt}}</code> — ₹ amount when known (e.g. ₹2250).</li>
+                                    <li><code>{{website}}</code> — retailer id: <code>amazon</code>, <code>flipkart</code>, <code>myntra</code>, <code>croma</code>, <code>shopsy</code>.</li>
+                                </ul>
+                            </details>
+
+                            <details class="template-help-nested">
+                                <summary>Math (price − coupon − card off)</summary>
+                                <p>Safe calculator: field names, numbers, and <code>+ - * / ( )</code> only. Money results print as ₹. Missing coupon/card off count as 0; missing <code>price</code> → empty.</p>
+                                <ul>
+                                    <li><code>{{math price - coupon - card_off}}</code> — pay after Amazon coupon + bank off (card_off uses ₹ amt, or price×% when only %).</li>
+                                    <li><code>{{math price - card_off}}</code> — Flipkart: selling price minus Best Value off.</li>
+                                    <li><code>{{math finalprice - card_off_amt}}</code> — after coupon, then subtract ₹ bank off.</li>
+                                    <li>Wrap with <code>{{if card_off_pct >= 5}}</code> so the line only shows for strong bank offers.</li>
+                                </ul>
+                            </details>
+
+                            <details class="template-help-nested">
+                                <summary>Compose (custom text + values)</summary>
+                                <p>Mix quoted text and field names. Empty fields become blank; if every field is empty the compose drops.</p>
+                                <ul>
+                                    <li><code>{{compose 'Apply ', card_bank, ' ', card_type, ' to get ', card_off}}</code> → Apply HDFC Credit to get 10%</li>
+                                    <li><code>{{compose 'Price: ', price, ' (was ', mrp, ')'}}</code></li>
+                                    <li><code>{{compose title, ' — ', off, ' off'}}</code></li>
+                                    <li><code>{{compose 'Bank: ', card_bank, ' · ', card_offer}}</code></li>
+                                </ul>
+                            </details>
+
+                            <details class="template-help-nested">
+                                <summary>If / else / endif</summary>
+                                <p>Show a block only when a field exists, or when a number comparison passes. One <code>{{else}}</code> max; no nesting.</p>
+                                <ul>
+                                    <li><code>{{if price}}…{{endif}}</code> — when selling price exists.</li>
+                                    <li><code>{{if mrp}}…{{else}}…{{endif}}</code> — with optional else.</li>
+                                    <li><code>{{if off >= 20}}</code> — MRP discount % at least 20.</li>
+                                    <li><code>{{if card_off_pct >= 5}}</code> — Flipkart Best Value % at least 5.</li>
+                                    <li><code>{{if card_off_amt}}</code> — when a ₹ bank off amount exists.</li>
+                                    <li><code>{{if website = 'amazon'}}</code> — per-site block (also <code>'flipkart'</code>, or <code>'https://amazon.in'</code> for *.amazon.in). Value must be in quotes.</li>
+                                    <li><code>{{if website = 'amazon'}}…{{else}}…{{endif}}</code> — else = fallback for every other site.</li>
+                                    <li>Ops: <code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> <code>=</code> <code>!=</code></li>
+                                </ul>
+                            </details>
+
+                            <details class="template-help-nested">
+                                <summary>Full message samples</summary>
+                                <pre class="template-sample">{{title}}
+
+{{if price}}
+Price: {{price}}
+{{endif}}
+{{coupon}}
+{{if card_off_pct >= 5}}
+{{compose 'Apply ', card_bank, ' ', card_type, ' to get ', card_off}}
+Pay {{math price - card_off}}
+{{endif}}
+
+Buy Now: {{link}}</pre>
+                                <pre class="template-sample">{{if website = 'amazon'}}
+{{title}}
+Price: {{price}}
+{{coupon}}
+{{link}}
+{{else}}
+{{title}}
+
+{{link}}
+{{endif}}</pre>
+                                <pre class="template-sample">{{if website = 'flipkart'}}
+{{if price >= 5000}}
+Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon_amt - card_off}}
+{{endif}}
+{{endif}}
+{{if website = 'https://amazon.in'}}
+{{title}} @ {{price}}
+{{link}}
+{{endif}}</pre>
+                                <p>Nesting <code>{{if}}</code> is supported (site + price, etc.). One <code>{{else}}</code> per <code>{{if}}</code>. Close every block with <code>{{endif}}</code>.</p>
+                            </details>
+
+                            <p class="template-guide-link-wrap">
+                                <a href="#" id="templateGuideLink">Full guide with more examples</a>
+                                <span class="settings-section-note" style="display:inline;margin-left:6px;">Opens in a new tab</span>
+                            </p>
                         </details>
-                        <div class="template-actions">
-                            <button type="button" class="btn-template-save" id="dealTemplateSave">
-                                <i class="fas fa-save"></i> Save format
-                            </button>
-                            <button type="button" class="btn-template-reset" id="dealTemplateReset">
-                                <i class="fas fa-rotate-left"></i> Reset to default
-                            </button>
+                    </div>
+                </details>
+
+                <details class="settings-acc">
+                    <summary class="settings-acc-head">
+                        <span class="settings-acc-icon"><i class="fab fa-telegram"></i></span>
+                        <span class="settings-acc-titles">
+                            <span class="settings-acc-title">Telegram automation</span>
+                            <span class="settings-acc-sub">Open links, or forward messages to the converter</span>
+                        </span>
+                        <i class="fas fa-chevron-down settings-acc-caret"></i>
+                    </summary>
+                    <div class="settings-acc-body">
+                        <p class="settings-section-note">On <strong>web.telegram.org</strong>, press <strong>Start</strong> on an open chat. Choose what happens with each new message below.</p>
+
+                        <div class="tg-setting-row">
+                            <label class="tg-setting-label" for="tgActionMode">On new message</label>
+                            <select id="tgActionMode" class="autopost-cooldown-select">
+                                <option value="off">Off — do nothing</option>
+                                <option value="open">Open links in tabs</option>
+                                <option value="forward">Forward message to converter</option>
+                            </select>
+                        </div>
+
+                        <div id="tgForwardWrap" hidden>
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="tgForwardTrigger">Forward when</label>
+                                <select id="tgForwardTrigger" class="autopost-cooldown-select">
+                                    <option value="auto">Auto — every new message</option>
+                                    <option value="manual">Manual — I pick with a button</option>
+                                    <option value="both">Both</option>
+                                </select>
+                            </div>
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="tgForwardImage">Attach post image</label>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="tgForwardImage">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <p class="settings-section-note">Sends the message text (and the post's photo, if enabled) straight to the converter — no tab opens. <strong>Auto</strong> forwards every new message that has a link; in <strong>Manual</strong> / <strong>Both</strong> a ⚡ Convert chip appears on each message so you can pick one. Press <strong>Stop</strong> to pause.</p>
+                        </div>
+
+                        <div id="tgOpenWrap">
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="tgLinkMode">Which links to open</label>
+                                <select id="tgLinkMode" class="autopost-cooldown-select">
+                                    <option value="first">First link only</option>
+                                    <option value="all">All links</option>
+                                    <option value="selected">Only selected stores</option>
+                                </select>
+                            </div>
+
+                            <div id="tgStoresWrap" class="tg-stores-wrap" hidden>
+                                <p class="settings-section-note">Only these stores:</p>
+                                <div id="tgStoresList" class="tg-stores-list"></div>
+                            </div>
+
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="tgTabMode">Open tabs in</label>
+                                <select id="tgTabMode" class="autopost-cooldown-select">
+                                    <option value="background">Background</option>
+                                    <option value="foreground">Foreground</option>
+                                </select>
+                            </div>
+
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="tgAutoClose">Close foreground tab after posting</label>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="tgAutoClose">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <p class="settings-section-note tg-autoclose-note">Background tabs always close after posting. Turn this on to also close foreground tabs (focus returns to Telegram either way).</p>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="settings-acc">
+                    <summary class="settings-acc-head">
+                        <span class="settings-acc-icon"><i class="fab fa-whatsapp"></i></span>
+                        <span class="settings-acc-titles">
+                            <span class="settings-acc-title">WhatsApp automation</span>
+                            <span class="settings-acc-sub">Open links, or forward messages to the converter</span>
+                        </span>
+                        <i class="fas fa-chevron-down settings-acc-caret"></i>
+                    </summary>
+                    <div class="settings-acc-body">
+                        <p class="settings-section-note">On <strong>web.whatsapp.com</strong>, open a chat and press <strong>Start</strong>. Choose what happens with each new message below. (Separate from session transfer for outbound sharing.)</p>
+
+                        <div class="tg-setting-row">
+                            <label class="tg-setting-label" for="waActionMode">On new message</label>
+                            <select id="waActionMode" class="autopost-cooldown-select">
+                                <option value="off">Off — do nothing</option>
+                                <option value="open">Open links in tabs</option>
+                                <option value="forward">Forward message to converter</option>
+                            </select>
+                        </div>
+
+                        <div id="waForwardWrap" hidden>
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="waForwardTrigger">Forward when</label>
+                                <select id="waForwardTrigger" class="autopost-cooldown-select">
+                                    <option value="auto">Auto — every new message</option>
+                                    <option value="manual">Manual — I pick with a button</option>
+                                    <option value="both">Both</option>
+                                </select>
+                            </div>
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="waForwardImage">Attach post image</label>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="waForwardImage">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <p class="settings-section-note">Sends the message text (and the post's photo, if enabled) straight to the converter — no tab opens. <strong>Auto</strong> forwards every new message that has a link; in <strong>Manual</strong> / <strong>Both</strong> a ⚡ Convert chip appears on each message so you can pick one. Press <strong>Stop</strong> to pause.</p>
+                        </div>
+
+                        <div id="waOpenWrap">
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="waLinkMode">Which links to open</label>
+                                <select id="waLinkMode" class="autopost-cooldown-select">
+                                    <option value="first">First link only</option>
+                                    <option value="all">All links</option>
+                                    <option value="selected">Only selected stores</option>
+                                </select>
+                            </div>
+
+                            <div id="waStoresWrap" class="tg-stores-wrap" hidden>
+                                <p class="settings-section-note">Only these stores:</p>
+                                <div id="waStoresList" class="tg-stores-list"></div>
+                            </div>
+
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="waTabMode">Open tabs in</label>
+                                <select id="waTabMode" class="autopost-cooldown-select">
+                                    <option value="background">Background</option>
+                                    <option value="foreground">Foreground</option>
+                                </select>
+                            </div>
+
+                            <div class="tg-setting-row">
+                                <label class="tg-setting-label" for="waAutoClose">Close foreground tab after posting</label>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="waAutoClose">
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <p class="settings-section-note wa-autoclose-note">Background tabs always close after posting. Turn this on to also close foreground tabs (focus returns to WhatsApp either way).</p>
                         </div>
                     </div>
                 </details>
