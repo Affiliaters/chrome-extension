@@ -12,7 +12,7 @@
 <body>
     <div class="dashboard-container app-shell">
         <header class="app-header">
-            <img src="images/logo.png" alt="Affiliaters Logo" class="nav-logo">
+            <img src="../assets/logo.png" alt="Affiliaters Logo" class="nav-logo">
             <div class="header-actions">
                 <div class="site-switcher-wrap">
                     <button type="button" class="site-pill" id="siteSwitcherBtn" aria-haspopup="true" aria-expanded="false">
@@ -531,7 +531,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
             <section class="tab-panel" id="tab-whatsapp" hidden>
                 <div class="wa-panel">
                     <div class="wa-visual">
-                        <img class="wa-loader" id="waLoader" src="images/whatsapp_loader.svg" alt="Loading">
+                        <img class="wa-loader" id="waLoader" src="../assets/whatsapp_loader.svg" alt="Loading">
                         <div class="wa-badge wa-badge-ok" id="waTick" hidden>
                             <svg viewBox="0 0 52 52" aria-hidden="true">
                                 <circle class="wa-badge-ring" cx="26" cy="26" r="24"></circle>
@@ -548,6 +548,18 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
                         <span class="site-dot" id="waDetailDot"></span>
                         <span id="waDetailText"></span>
                     </div>
+                    <div class="amz-warn" id="waWarn" hidden>
+                        <strong class="amz-warn-head">&#9888;&#65039; This transfers your WhatsApp login, not just links.</strong>
+                        <span>Your WhatsApp Web credentials and encryption keys are sent to your Affiliaters
+                            account so deals can be posted from there, and this browser is signed out of
+                            WhatsApp Web afterwards. Automating WhatsApp is against Meta&rsquo;s terms &mdash; the
+                            number can be restricted or banned. Use a spare number, not your personal one.</span>
+                    </div>
+                    <label class="amz-consent" id="waConsent" hidden>
+                        <input type="checkbox" id="waAgree">
+                        <span>I understand my WhatsApp credentials will be transferred, and I&rsquo;m using a
+                            number I can afford to lose</span>
+                    </label>
                     <button class="btn-convert btn-wa-transfer" id="waTransferBtn" hidden></button>
                     <p class="wa-hint" id="waHint" hidden></p>
                 </div>
@@ -557,7 +569,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
             <section class="tab-panel" id="tab-amazon" hidden>
                 <div class="wa-panel">
                     <div class="wa-visual">
-                        <img class="wa-loader" id="amzLoader" src="images/whatsapp_loader.svg" alt="Loading">
+                        <img class="wa-loader" id="amzLoader" src="../assets/whatsapp_loader.svg" alt="Loading">
                         <div class="wa-badge wa-badge-ok" id="amzTick" hidden>
                             <svg viewBox="0 0 52 52" aria-hidden="true">
                                 <circle class="wa-badge-ring" cx="26" cy="26" r="24"></circle>

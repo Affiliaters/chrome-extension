@@ -104,9 +104,19 @@ If you skip the installer, the extension still checks for new versions and shows
 
 ---
 
-## 🔒 Privacy & permissions
+## 🔒 Privacy, permissions & risk — read before you enable the helpers
+
+> **This is the GitHub / sideloaded build, not the Chrome Web Store version.** It has capabilities the store build does not, and those capabilities carry real account risk. The store build is covered by different, narrower policies at [affiliaters.in/extension-privacy](https://affiliaters.in/extension-privacy) and [affiliaters.in/extension-terms](https://affiliaters.in/extension-terms).
 
 The extension needs access to the supported store sites (Convert buttons + product details), WhatsApp Web / Telegram Web (session linking and automation), and the Affiliaters API (convert links, share, history). It only runs on those sites and your chosen platform.
+
+Three optional features move sensitive account material and are **off until you switch them on**:
+
+- **Amazon linking** — sends your `amazon.in` cookies, *including HttpOnly cookies*, to Affiliaters so short links are generated under your Associates account.
+- **WhatsApp connect** — extracts WhatsApp Web **credentials and encryption keys**, uploads them to Affiliaters, then wipes the local WhatsApp Web session (you get logged out in that browser). Unofficial automation is against WhatsApp's ToS — Meta can restrict, lock or ban the number. **Don't use a number you can't afford to lose.**
+- **Telegram / WhatsApp listeners** — while running, they also override the page's visibility state so the tab keeps receiving messages in the background.
+
+Full details — what data is processed, why, and every permission — are in **[PRIVACY.md](PRIVACY.md)**. Your rights and obligations, including the risks above, are in **[TERMS.md](TERMS.md)**. We don't sell your data or include ads/analytics trackers.
 
 ---
 

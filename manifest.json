@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Affiliaters Deal Converter",
-  "version": "0.0.5",
+  "version": "0.0.48",
   "description": "Convert deals using Affiliaters",
   "permissions": [
     "storage",
@@ -30,7 +30,12 @@
   },
   "action": {
     "default_popup": "html/popup.html",
-    "default_icon": "images/icon.png"
+    "default_icon": {
+      "16": "icon.png",
+      "32": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
   },
   "content_scripts": [
     {
@@ -46,6 +51,7 @@
       ],
       "js": [
         "js/config.js",
+        "js/mobile-retail.js",
         "js/storage.js",
         "js/floating-drag.js",
         "js/content.js"
@@ -60,6 +66,7 @@
       ],
       "js": [
         "js/config.js",
+        "js/mobile-retail.js",
         "js/storage.js",
         "js/floating-drag.js",
         "js/telegram.js"
@@ -84,6 +91,7 @@
       ],
       "js": [
         "js/config.js",
+        "js/mobile-retail.js",
         "js/storage.js",
         "js/floating-drag.js",
         "js/whatsapp-listener.js"
@@ -101,6 +109,9 @@
     }
   ],
   "icons": {
-    "128": "images/icon.png"
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
   }
 }

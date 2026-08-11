@@ -1321,3 +1321,51 @@ body > .aff-share-page-btn {
 .aff-share-page-btn .fa-spin {
     animation: aff-spin 1s linear infinite !important;
 }
+
+/* Mobile / narrow retailer pages — two Convert buttons share one compact row
+   (never full-width/stacked), popup fits phone. */
+@media (max-width: 767px) {
+    .convert-button-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        gap: 8px !important;
+        align-items: stretch !important;
+    }
+    .convert-button-container .convert-deal-btn,
+    .convert-button-container .myntra-convert-btn,
+    .convert-button-container .flipkart-convert-btn.convert-deal-btn,
+    .convert-button-container .amazon-convert-btn,
+    .convert-button-container .croma-convert-btn,
+    .convert-button-container .shopsy-convert-btn {
+        flex: 1 1 0 !important;
+        width: auto !important;
+        min-width: 0 !important;
+        max-width: none !important;
+        height: 40px !important;
+        margin: 8px 0 !important;
+        padding: 8px 10px !important;
+        font-size: 14px !important;
+        line-height: 1 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+    }
+    .deal-popup .popup-content,
+    .popup-content {
+        width: calc(100% - 24px) !important;
+        max-width: none !important;
+        padding: 16px !important;
+        max-height: 85vh !important;
+        overflow: auto !important;
+    }
+    .popup-buttons {
+        flex-wrap: wrap !important;
+        justify-content: stretch !important;
+    }
+    .popup-buttons button {
+        flex: 1 1 auto !important;
+    }
+}
