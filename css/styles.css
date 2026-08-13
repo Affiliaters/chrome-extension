@@ -3055,11 +3055,49 @@ body.dark-theme .toggle-label {
 }
 
 .convert-btn-panel-title {
+    display: flex;
+    align-items: center;
+    gap: 7px;
     font-size: 13px;
     font-weight: 650;
     color: var(--text-color);
     margin: 0;
     line-height: 1.3;
+}
+
+.convert-btn-panel-title>i {
+    color: var(--primary-color);
+    font-size: 12px;
+}
+
+/* Accent panel — a setting that must not read as optional fine print */
+.convert-btn-panel-accent {
+    border-left: 3px solid var(--primary-color);
+}
+
+.convert-btn-panel-accent .stores-cooldown {
+    margin-top: 0;
+}
+
+.convert-btn-panel-note {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 8px;
+    margin: 0;
+    font-size: 11.5px;
+    line-height: 1.35;
+    color: var(--text-secondary);
+}
+
+.convert-btn-panel-note>i {
+    color: var(--primary-color);
+    font-size: 11px;
+}
+
+.convert-btn-panel-note strong {
+    color: var(--text-color);
+    font-weight: 600;
 }
 
 .convert-btn-panel-head {
@@ -3156,8 +3194,25 @@ body.dark-theme .convert-btn-help-tip {
 }
 
 .stores-cooldown-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
     font-size: 13px;
+    line-height: 1.35;
     color: var(--text-secondary);
+}
+
+/* Icon marks WHICH cooldown this is — robot = Auto Post, shield = Posted guard */
+.stores-cooldown-label>i {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--primary-color);
+}
+
+.stores-cooldown-label strong {
+    color: var(--text-color);
+    font-weight: 600;
 }
 
 /* ---- Telegram auto-open settings ---- */
@@ -3575,4 +3630,701 @@ body.dark-theme .convert-btn-help-tip {
 }
 .autopost-warning strong {
     color: var(--error-color, #FF6A55);
+}
+/* ---- Deals tab: deal card, scheduled posts, watchlist ---- */
+.deal-card-toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 10px 0;
+}
+
+/* Compact action buttons (the full-width .btn-convert is for the main CTA only) */
+.aff-btn-sm {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.aff-btn-sm:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.aff-btn-sm:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.aff-btn-primary {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white, #fff);
+}
+
+.aff-btn-primary:hover:not(:disabled) {
+    color: var(--white, #fff);
+    filter: brightness(1.08);
+}
+
+/* Underline inputs — same look as the Affiliaters site forms (label-as-placeholder,
+   no box, 1px bottom rule that brightens on focus). */
+.aff-underline-input {
+    width: 100%;
+    padding: 10px 2px 8px;
+    border: none;
+    border-bottom: 1px solid var(--border-color);
+    border-radius: 0;
+    background: transparent;
+    color: var(--text-color);
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.15s ease;
+}
+
+.aff-underline-input::placeholder {
+    color: var(--text-secondary);
+}
+
+.aff-underline-input:focus {
+    border-bottom-color: var(--primary-color);
+}
+
+/* datetime/time pickers keep the same underline treatment */
+.aff-underline-input[type="datetime-local"],
+.aff-underline-input[type="time"],
+.aff-underline-input[type="number"] {
+    color-scheme: dark;
+}
+
+body:not(.dark-theme) .aff-underline-input[type="datetime-local"],
+body:not(.dark-theme) .aff-underline-input[type="time"],
+body:not(.dark-theme) .aff-underline-input[type="number"] {
+    color-scheme: light;
+}
+
+.sched-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 130px;
+    flex: 1;
+}
+
+.sched-field-label {
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+.sched-field-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    align-items: flex-end;
+}
+
+.watch-interval-select {
+    margin-left: auto;
+}
+
+/* Filter chips (mobile "Recents"-style tabs) */
+.watch-chips {
+    display: flex;
+    gap: 8px;
+    margin: 10px 0 4px;
+}
+
+.watch-chip {
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.watch-chip.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: var(--white, #fff);
+}
+
+/* Watchlist / Back-in-stock empty states */
+.aff-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    padding: 30px 16px 26px;
+}
+
+.aff-empty-art {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2px;
+}
+
+.aff-empty-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    opacity: 0;
+    animation: affEmptyPing 2.8s ease-out infinite;
+}
+
+.aff-empty-ring:nth-child(2) {
+    animation-delay: 0.9s;
+}
+
+.aff-empty-ring:nth-child(3) {
+    animation-delay: 1.8s;
+}
+
+@keyframes affEmptyPing {
+    0% {
+        transform: scale(0.55);
+        opacity: 0.45;
+    }
+
+    70% {
+        opacity: 0.08;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+}
+
+.aff-empty-orb {
+    position: relative;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary-color), #7c3aed);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
+    animation: affEmptyFloat 3.6s ease-in-out infinite;
+}
+
+@keyframes affEmptyFloat {
+    0%,
+    100% {
+        transform: translateY(-3px);
+    }
+
+    50% {
+        transform: translateY(3px);
+    }
+}
+
+.aff-empty-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.aff-empty-sub {
+    margin: 0;
+    max-width: 320px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+.aff-empty-cta {
+    margin-top: 4px;
+}
+
+.aff-empty-tips {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+    width: 100%;
+    max-width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.aff-empty-tips li {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    text-align: left;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 9px 11px;
+}
+
+.aff-empty-tips i {
+    color: var(--primary-color);
+    font-size: 11px;
+    margin-top: 2px;
+    flex: 0 0 auto;
+}
+
+/* Compact variant — the Home tab's "Recent conversions" card has little room */
+.aff-empty-compact {
+    padding: 18px 12px 16px;
+    gap: 7px;
+}
+
+.aff-empty-compact .aff-empty-art {
+    width: 64px;
+    height: 64px;
+}
+
+.aff-empty-compact .aff-empty-orb {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
+}
+
+.aff-empty-compact .aff-empty-title {
+    font-size: 13.5px;
+}
+
+.aff-empty-compact .aff-empty-sub {
+    font-size: 12px;
+    max-width: 260px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .aff-empty-ring,
+    .aff-empty-orb {
+        animation: none;
+    }
+}
+
+/* Watch add popup */
+.aff-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 18px;
+}
+
+.aff-modal {
+    width: 100%;
+    max-width: 420px;
+    max-height: 86vh;
+    overflow-y: auto;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.aff-modal-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-color);
+}
+
+.aff-modal-close {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 4px 6px;
+}
+
+.aff-modal-close:hover {
+    color: var(--text-color);
+}
+
+/* Direct children of the modal stack at natural height (.sched-field is flex:1
+   for the horizontal schedule form, which would stretch it in this column) */
+.aff-modal>.sched-field {
+    flex: 0 0 auto;
+    align-items: stretch;
+}
+
+.watch-modal-preview {
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 10px 12px;
+}
+
+.watch-modal-kinds {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+}
+
+/* Toggle rows: switch pinned left, label left-aligned next to it */
+.watch-modal-kinds .toggle-switch {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.watch-modal-kinds .toggle-slider {
+    flex: 0 0 40px;
+}
+
+.watch-modal-kinds .store-option-sublabel {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 13px;
+    line-height: 1.3;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+}
+
+.aff-modal-actions {
+    margin: 2px 0 0;
+}
+
+.deal-card-canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border-color);
+    margin: 10px 0;
+}
+
+/* Copy PNG / Download: one tight row, same look as History's actions */
+.deal-card-actions {
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.deal-card-actions[hidden] {
+    display: none;
+}
+
+.deal-card-actions .btn-history-action[data-action="run"] {
+    background: var(--success-color, #83BF6E);
+    color: var(--white);
+}
+
+.post-image-picker {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+}
+
+.post-image-head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+}
+
+.post-image-design {
+    flex: 0 0 auto;
+    margin-bottom: 12px;
+}
+
+/* Two choices, one line, labels never broken across lines */
+.post-image-picker .watch-chips {
+    margin: 0;
+    flex-wrap: nowrap;
+}
+
+.post-image-picker .watch-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 7px 10px;
+    white-space: nowrap;
+}
+
+/* 20 designs: wrap into a scrollable grid instead of one endless row */
+.deal-card-themes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    max-height: 250px;
+    overflow-y: auto;
+    padding: 4px 2px 8px;
+}
+
+.deal-card-theme-btn {
+    flex: 0 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: none;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 4px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 10px;
+}
+
+.deal-card-theme-btn canvas {
+    display: block;
+    border-radius: 4px;
+}
+
+.deal-card-theme-btn.selected {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.sched-add {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 10px 0;
+}
+
+.sched-add .aff-btn-sm {
+    align-self: flex-start;
+}
+
+.sched-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+/* Stacked like a Recent/History card: info on top, full-width action row below */
+.sched-row {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--card-bg);
+}
+
+.sched-row-info {
+    min-width: 0;
+}
+
+.sched-row .history-actions {
+    width: 100%;
+}
+
+.sched-row .btn-history-action[data-action="target"] { background: #FFC107; }
+.sched-row .btn-history-action[data-action="run"] { background: var(--success-color, #83BF6E); }
+.sched-row .btn-history-action[data-action="mode"],
+.sched-row .btn-history-action[data-action="pause"] { background: var(--primary-color); }
+.sched-row .btn-history-action:hover { opacity: 0.9; }
+
+/* Labels never wrap ("Auto-post" was breaking at the hyphen onto two lines) */
+.sched-row .btn-history-action {
+    white-space: nowrap;
+    font-size: 13px;
+    padding: 0 10px;
+}
+
+.sched-row-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.sched-row-meta {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+/* display:flex on these would otherwise defeat the hidden attribute (same trap as
+   .nav-tab[hidden] above) */
+.aff-modal-overlay[hidden],
+.sched-field[hidden],
+.deal-card-toolbar[hidden] {
+    display: none;
+}
+
+/* Readable watch rows: the TARGET the user set leads big in yellow; the CURRENT
+   price sits beside it smaller in the accent blue */
+.watch-price-line {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.watch-price-target {
+    font-weight: 700;
+    font-size: 13px;
+    color: var(--success-color, #83BF6E);
+    white-space: nowrap;
+}
+
+.watch-price-current {
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--primary-color);
+    white-space: nowrap;
+}
+
+/* 🕐 2m — last-checked chip at the end of the badge line */
+.watch-checked-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    color: var(--text-secondary);
+}
+
+/* Product thumbnail beside the details */
+.watch-row-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.watch-row-thumb {
+    flex: 0 0 auto;
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    background: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+/* Badges fill one line and wrap to the next when they run out of room.
+   Direct child of the card (below the image row) — the card's own gap spaces it. */
+.watch-badges-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    row-gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 0;
+}
+
+.watch-badges-line .watch-badge,
+.watch-badges-line .sched-row-meta {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    margin-top: 0;
+}
+
+.watch-badge {
+    padding: 1px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.watch-badge-ok { background: rgba(131, 191, 110, 0.18); color: var(--success-color, #83BF6E); }
+.watch-badge-oos { background: rgba(255, 106, 85, 0.18); color: var(--error-color, #FF6A55); }
+.watch-badge-hit { background: rgba(255, 193, 7, 0.18); color: #FFC107; }
+.watch-badge-kind { background: rgba(42, 133, 255, 0.15); color: var(--primary-color); }
+
+/* Underline selects — same field language as the underline inputs, so a select and
+   an input sitting side by side share one baseline and weight */
+.aff-underline-select {
+    -webkit-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%236F767E' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 4px center;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+.aff-underline-select option {
+    background: var(--card-bg);
+    color: var(--text-color);
+}
+
+/* One shared field grid keeps labels and controls aligned across the row */
+.sched-field-row .sched-field {
+    flex: 1 1 140px;
+}
+
+.sched-field .aff-underline-input,
+.sched-field .aff-underline-select {
+    height: 38px;
+}
+
+/* Per-product refresh interval — tiny select at the end of the badge line */
+.watch-int-select {
+    flex: 0 0 auto;
+    border: 1px solid var(--border-color);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    cursor: pointer;
+}
+
+.watch-int-select:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+/* The Deals-tab row that opens the watchlist page keeps the accordion look */
+.watch-open-page {
+    width: 100%;
+    text-align: left;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
 }

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watchlist &amp; Back in stock</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="dashboard-container app-shell">
+        <header class="app-header">
+            <button id="backBtn" class="theme-toggle" title="Back to Deals" aria-label="Back">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <img src="../assets/logo.png" alt="Affiliaters Logo" class="nav-logo">
+            <div class="header-actions"></div>
+        </header>
+
+        <main class="app-body">
+            <section class="tab-panel" id="tab-watch">
+                <div class="page-header">
+                    <h1 class="page-title">Watchlist &amp; Back in stock</h1>
+                </div>
+
+                <div class="deal-card-toolbar">
+                    <button class="aff-btn-sm aff-btn-primary" id="watchAddOpen"><i class="fas fa-plus"></i> Add product</button>
+                    <button class="aff-btn-sm" id="watchCheckNow"><i class="fas fa-rotate"></i> Check all now</button>
+                </div>
+                <div class="watch-chips" id="watchChips">
+                    <button class="watch-chip active" data-filter="all">All</button>
+                    <button class="watch-chip" data-filter="priceDrop">Watchlist</button>
+                    <button class="watch-chip" data-filter="backInStock">Back in stock</button>
+                </div>
+                <div class="sched-list" id="watchList"></div>
+            </section>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-tab" data-goto="home">
+                <i class="fas fa-home"></i><span>Home</span>
+            </button>
+            <button class="nav-tab" data-goto="history">
+                <i class="fas fa-history"></i><span>History</span>
+            </button>
+            <button class="nav-tab active" data-goto="deals">
+                <i class="fas fa-bolt"></i><span>Deals</span>
+            </button>
+            <button class="nav-tab" data-goto="profile">
+                <i class="fas fa-cog"></i><span>Settings</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- Add popup: paste/prefill a link, see the live product, pick alerts -->
+    <div class="aff-modal-overlay" id="watchModal" hidden>
+        <div class="aff-modal">
+            <div class="aff-modal-head">
+                <span>Add to Watchlist / Back in stock</span>
+                <button class="aff-modal-close" id="watchModalClose"><i class="fas fa-xmark"></i></button>
+            </div>
+            <label class="sched-field">
+                <span class="sched-field-label">Store product link</span>
+                <input type="url" id="watchModalUrl" class="aff-underline-input" placeholder="https://www.amazon.in/dp/...">
+            </label>
+            <div class="watch-modal-preview" id="watchModalPreview" hidden>
+                <div class="sched-row-title" id="watchModalTitle"></div>
+                <div class="sched-row-meta" id="watchModalMeta"></div>
+            </div>
+            <p class="settings-section-note" id="watchModalStatus">Paste a product link, or open a product page before pressing Add.</p>
+            <label class="sched-field" id="watchModalTargetField" hidden>
+                <span class="sched-field-label">Alert when price is at or below (₹)</span>
+                <input type="number" id="watchModalTarget" class="aff-underline-input" min="1" step="1">
+            </label>
+            <label class="sched-field">
+                <span class="sched-field-label">Check every</span>
+                <select id="watchModalInterval" class="aff-underline-input aff-underline-select">
+                    <option value="15">15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="60" selected>1 hour</option>
+                    <option value="120">2 hours</option>
+                    <option value="180">3 hours</option>
+                    <option value="360">6 hours</option>
+                    <option value="720">12 hours</option>
+                    <option value="1440">24 hours</option>
+                </select>
+            </label>
+            <div class="convert-btn-toggles watch-modal-kinds">
+                <label class="toggle-switch">
+                    <input type="checkbox" id="watchModalKindPrice" checked>
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label store-option-sublabel">Watchlist (price drop)</span>
+                </label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="watchModalKindStock" checked>
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label store-option-sublabel">Back in stock</span>
+                </label>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="watchModalAutoPost">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label store-option-sublabel">Auto-post on alert (Convert Share)</span>
+                </label>
+            </div>
+            <div class="deal-card-toolbar aff-modal-actions">
+                <button class="aff-btn-sm aff-btn-primary" id="watchModalSave" disabled><i class="fas fa-check"></i> Add</button>
+                <button class="aff-btn-sm" id="watchModalCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/watchlist.js"></script>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Affiliaters Deal Converter",
-  "version": "0.0.48",
+  "version": "0.0.56",
   "description": "Convert deals using Affiliaters",
   "permissions": [
     "storage",
@@ -9,6 +9,8 @@
     "scripting",
     "cookies",
     "alarms",
+    "contextMenus",
+    "notifications",
     "declarativeNetRequest"
   ],
   "host_permissions": [
@@ -23,8 +25,30 @@
     "https://ekaro-api.affiliaters.in/*",
     "https://web.whatsapp.com/*",
     "https://web.telegram.org/*",
-    "https://raw.githubusercontent.com/*"
+    "https://raw.githubusercontent.com/*",
+    "https://m.media-amazon.com/*",
+    "https://images-eu.ssl-images-amazon.com/*",
+    "https://rukminim1.flixcart.com/*",
+    "https://rukminim2.flixcart.com/*",
+    "https://rukminim3.flixcart.com/*",
+    "https://assets.myntassets.com/*",
+    "https://media.croma.com/*",
+    "https://media-ik.croma.com/*"
   ],
+  "commands": {
+    "aff-convert-only": {
+      "suggested_key": {
+        "default": "Alt+Shift+C"
+      },
+      "description": "Convert the current product (Convert Only)"
+    },
+    "aff-convert-share": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Convert and share the current product"
+    }
+  },
   "background": {
     "service_worker": "js/background.js"
   },

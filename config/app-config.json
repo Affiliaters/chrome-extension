@@ -2,7 +2,32 @@
   "flipkart": {
     "button": {
       "placements": [
-        { "target": { "css": "h1" }, "mode": "after" }
+        {
+          "target": {
+            "css": "h1"
+          },
+          "mode": "after"
+        }
+      ],
+      "placementsMobile": [
+        {
+          "target": {
+            "css": "h1"
+          },
+          "mode": "after"
+        },
+        {
+          "target": {
+            "css": "span.B_NuCI"
+          },
+          "mode": "after"
+        },
+        {
+          "target": {
+            "css": "span.VU-ZEz"
+          },
+          "mode": "after"
+        }
       ]
     }
   },

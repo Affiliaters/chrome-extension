@@ -124,17 +124,39 @@
                             <strong>Warning:</strong> Enabling "AP Non-Prod" for any website will automatically post a deal for <strong>every new page visit</strong> (e.g. search queries, categories, etc.) you browse on that website, unless you have visited that exact page within the cooldown period.
                         </div>
 
-                        <div class="stores-cooldown">
-                            <span class="stores-cooldown-label">Don’t repost the same product for</span>
-                            <select id="autopostCooldown" class="autopost-cooldown-select">
-                                <option value="15">15 minutes</option>
-                                <option value="30">30 minutes</option>
-                                <option value="60">1 hour</option>
-                                <option value="180">3 hours</option>
-                                <option value="360">6 hours</option>
-                                <option value="720">12 hours</option>
-                                <option value="1440">24 hours</option>
-                            </select>
+                        <div class="convert-btn-visibility-settings">
+                            <div class="convert-btn-panel convert-btn-panel-accent">
+                                <div class="convert-btn-panel-head">
+                                    <div class="convert-btn-panel-title">
+                                        <i class="fas fa-shield-halved" aria-hidden="true"></i>
+                                        Repeat protection
+                                    </div>
+                                    <button type="button" class="convert-btn-help" aria-expanded="false" aria-controls="repeatHelpTip" title="What this does">
+                                        <i class="fas fa-circle-info" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                                <div class="convert-btn-help-tip" id="repeatHelpTip" hidden>
+                                    One window for every way a deal goes out, automatic and manual alike.
+                                    Inside it, the same product is never posted twice: a convert you trigger
+                                    yourself asks you first (post again or cancel), and a post nothing can ask
+                                    about — Auto Post, a scheduled post, a watchlist alert — is skipped and
+                                    reported. Counting starts from the last successful post of that product.
+                                </div>
+                                <div class="stores-cooldown">
+                                    <span class="stores-cooldown-label">
+                                        <span>Don’t post the same product twice within</span>
+                                    </span>
+                                    <select id="autopostCooldown" class="autopost-cooldown-select">
+                                        <option value="15">15 minutes</option>
+                                        <option value="30">30 minutes</option>
+                                        <option value="60">1 hour</option>
+                                        <option value="180">3 hours</option>
+                                        <option value="360">6 hours</option>
+                                        <option value="720">12 hours</option>
+                                        <option value="1440">24 hours</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="convert-btn-visibility-settings" id="convertBtnVisibilitySettings">
@@ -205,7 +227,7 @@
                                     <li>Open a <strong>product page</strong> on that site. The deal is posted <strong>automatically</strong> — no clicks — using your saved <strong>Message format</strong>.</li>
                                     <li>It posts from the account you are <strong>logged in to</strong> (the one shown at the top). If you’re not logged in, it won’t post and shows an error instead.</li>
                                     <li>A small box appears bottom-right: <em>Hunny on work…</em> → <em>Autopost completed</em>. Press <strong>Stop</strong> there anytime to turn it off for that site.</li>
-                                    <li>The <strong>same product won’t post again</strong> until the cooldown above passes (default 1 hour). After that, visiting it can post again.</li>
+                                    <li>The <strong>same product won’t post again</strong> until <strong>Repeat protection</strong> above expires (default 1 hour). After that, visiting it can post again.</li>
                                     <li>It only runs on real <strong>product pages</strong> — never on search, category, or home pages.</li>
                                 </ol>
                             </div>
@@ -527,6 +549,131 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
                 </details>
             </section>
 
+            <!-- DEALS: deal-card generator (all builds) + scheduled posts & watchlist (github) -->
+            <section class="tab-panel" id="tab-deals" hidden>
+
+                <details class="settings-acc" id="dealCardAcc">
+                    <summary class="settings-acc-head">
+                        <span class="settings-acc-icon"><i class="fas fa-image"></i></span>
+                        <span class="settings-acc-titles">
+                            <span class="settings-acc-title">Deal card</span>
+                            <span class="settings-acc-sub">Shareable image for the current product</span>
+                        </span>
+                        <i class="fas fa-chevron-down settings-acc-caret"></i>
+                    </summary>
+                    <div class="settings-acc-body">
+                        <div class="deal-card-themes" id="dealCardThemes" hidden></div>
+                        <canvas id="dealCardCanvas" class="deal-card-canvas" width="1200" height="628" hidden></canvas>
+                        <p class="settings-section-note" id="dealCardHint">
+                            Open a store product page, then expand this card — the image is drawn automatically.
+                        </p>
+                        <div class="history-actions deal-card-actions" id="dealCardActions" hidden>
+                            <button class="btn-history-action" data-action="copy" id="dealCardCopy">
+                                <i class="fas fa-copy"></i><span class="history-action-text">Copy PNG</span>
+                            </button>
+                            <button class="btn-history-action" data-action="run" id="dealCardDownload">
+                                <i class="fas fa-download"></i><span class="history-action-text">Download</span>
+                            </button>
+                        </div>
+
+                        <div class="post-image-picker">
+                            <div class="post-image-head">
+                                <span class="sched-field-label">Attach to every shared post</span>
+                                <button type="button" class="convert-btn-help" aria-expanded="false" aria-controls="postImageHelpTip" title="What this does">
+                                    <i class="fas fa-circle-info" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="convert-btn-help-tip" id="postImageHelpTip" hidden>
+                                Whether a post carries an image at all is the store's
+                                <strong>Product image</strong> toggle under <strong>Shopping sites</strong>.
+                                This only picks which image the stores you turned on get: the retailer photo,
+                                or the deal card in the design selected here. Applies everywhere a deal goes
+                                out — Convert Share buttons, this dashboard, right-click, shortcuts, scheduled
+                                posts and watchlist alerts.
+                            </div>
+                            <label class="sched-field post-image-design">
+                                <span class="sched-field-label">Card design</span>
+                                <select id="dealCardThemeSelect" class="aff-underline-input aff-underline-select"></select>
+                            </label>
+                            <div class="watch-chips" id="postImageMode">
+                                <button class="watch-chip" data-mode="product"><i class="fas fa-camera"></i> Product photo</button>
+                                <button class="watch-chip" data-mode="card"><i class="fas fa-image"></i> Deal card</button>
+                            </div>
+                        </div>
+                    </div>
+                </details>
+
+                <details class="settings-acc" id="schedAcc">
+                    <summary class="settings-acc-head">
+                        <span class="settings-acc-icon"><i class="fas fa-clock"></i></span>
+                        <span class="settings-acc-titles">
+                            <span class="settings-acc-title">Scheduled posts</span>
+                            <span class="settings-acc-sub">Post automatically at a date &amp; time</span>
+                        </span>
+                        <i class="fas fa-chevron-down settings-acc-caret"></i>
+                    </summary>
+                    <div class="settings-acc-body">
+                        <div class="sched-add">
+                            <input type="url" id="schedUrl" class="aff-underline-input" placeholder="Store product link">
+                            <div class="sched-field-row">
+                                <label class="sched-field">
+                                    <span class="sched-field-label">Post frequency</span>
+                                    <select id="schedRepeat" class="aff-underline-input aff-underline-select">
+                                        <option value="none">Once</option>
+                                        <option value="daily">Daily</option>
+                                        <option value="weekly">Weekly</option>
+                                        <option value="monthly">Monthly</option>
+                                    </select>
+                                </label>
+                                <label class="sched-field" id="schedWhenField">
+                                    <span class="sched-field-label">Date &amp; time</span>
+                                    <input type="datetime-local" id="schedWhen" class="aff-underline-input">
+                                </label>
+                                <label class="sched-field" id="schedWeekdayField" hidden>
+                                    <span class="sched-field-label">Day</span>
+                                    <select id="schedWeekday" class="aff-underline-input aff-underline-select">
+                                        <option value="0">Sunday</option>
+                                        <option value="1">Monday</option>
+                                        <option value="2">Tuesday</option>
+                                        <option value="3">Wednesday</option>
+                                        <option value="4">Thursday</option>
+                                        <option value="5">Friday</option>
+                                        <option value="6">Saturday</option>
+                                    </select>
+                                </label>
+                                <label class="sched-field" id="schedMonthdayField" hidden>
+                                    <span class="sched-field-label">Day of month</span>
+                                    <select id="schedMonthday" class="aff-underline-input aff-underline-select"></select>
+                                </label>
+                                <label class="sched-field" id="schedTimeField" hidden>
+                                    <span class="sched-field-label">Time</span>
+                                    <input type="time" id="schedTime" class="aff-underline-input">
+                                </label>
+                            </div>
+                            <button class="aff-btn-sm aff-btn-primary" id="schedAdd"><i class="fas fa-plus"></i> Schedule</button>
+                        </div>
+                        <p class="settings-section-note">
+                            The price is fetched fresh when the schedule fires — out-of-stock or missing
+                            price skips that occurrence and keeps the schedule armed.
+                        </p>
+                        <div class="sched-list" id="schedList"></div>
+                    </div>
+                </details>
+
+                <button type="button" class="settings-acc watch-open-page" id="watchOpenPage">
+                    <span class="settings-acc-head">
+                        <span class="settings-acc-icon"><i class="fas fa-binoculars"></i></span>
+                        <span class="settings-acc-titles">
+                            <span class="settings-acc-title">Watchlist &amp; Back in stock</span>
+                            <span class="settings-acc-sub">Price-drop &amp; restock alerts</span>
+                        </span>
+                        <i class="fas fa-chevron-right settings-acc-caret"></i>
+                    </span>
+                </button>
+            </section>
+
+            
+
             <!-- WHATSAPP: session transfer (nav item only appears on WhatsApp Web) -->
             <section class="tab-panel" id="tab-whatsapp" hidden>
                 <div class="wa-panel">
@@ -625,6 +772,9 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
             <button class="nav-tab" data-tab="history">
                 <i class="fas fa-history"></i><span>History</span>
             </button>
+            <button class="nav-tab" data-tab="deals">
+                <i class="fas fa-bolt"></i><span>Deals</span>
+            </button>
             <button class="nav-tab" data-tab="whatsapp" id="navWhatsapp" hidden>
                 <i class="fab fa-whatsapp"></i><span>WhatsApp</span>
             </button>
@@ -638,6 +788,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
     </div>
     <script src="../js/config.js"></script>
     <script src="../js/storage.js"></script>
+    <script src="../js/deal-card.js"></script>
     <script src="../js/dashboard.js"></script>
 </body>
 
