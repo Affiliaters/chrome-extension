@@ -303,8 +303,10 @@
     font-size: 16px;
 }
 
-/* Ensure Font Awesome is loaded */
-@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css');
+/* No Font Awesome here on purpose. An @import at this point in the file is invalid CSS
+   (imports must precede all rules) so the browser was already dropping it — the on-page
+   buttons have always rendered text-only, and no request should leave for a CDN from a
+   retailer page. The .fa-spin rule below still animates the spinner markup if present. */
 
 /* Popup content */
 .popup-content {
