@@ -1,7 +1,7 @@
 {
-  "latest_version": "0.0.60",
+  "latest_version": "0.0.11",
   "min_version": "0.0.1",
   "download_url": "https://github.com/Affiliaters/chrome-extension/archive/refs/heads/main.zip",
   "notes": "Latest build.",
-  "commit": "bdf9320"
+  "commit": "1b55a7f"
 }

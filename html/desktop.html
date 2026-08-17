@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Affiliaters — Desktop</title>
+    <link rel="stylesheet" href="../assets/vendor/inter/inter.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/desktop.css">
+    <link rel="stylesheet" href="../assets/vendor/fontawesome/all.min.css">
+</head>
+
+<!-- Wide, full-tab companion to the popup dashboard. Converting and deal-card
+     CREATION deliberately stay in the popup: they read the tab you are on
+     (chrome.tabs.query active) and on an extension page that tab is this page.
+     Everything that does not need the current page lives here with room to work. -->
+
+<body class="desk-body">
+    <div class="desk-shell">
+
+        <aside class="desk-sidebar">
+            <!-- "Extension" under the wordmark: this page looks a lot like the
+                 Affiliaters web dashboard, and there is otherwise nothing telling you
+                 which of the two you are in. -->
+            <div class="desk-brand">
+                <img src="../assets/logo.png" alt="Affiliaters Logo" class="nav-logo">
+                <span class="desk-brand-tag">Extension</span>
+            </div>
+
+            <button class="desk-nav-item active" data-section="history">
+                <i class="fas fa-clock-rotate-left"></i> History
+            </button>
+            <button class="desk-nav-item" data-section="stores">
+                <i class="fas fa-store"></i> Shopping sites
+            </button>
+            <button class="desk-nav-item" data-section="format">
+                <i class="fas fa-comment-dots"></i> Message format
+            </button>
+            <button class="desk-nav-item" data-section="card">
+                <i class="fas fa-image"></i> Card design
+            </button>
+            <button class="desk-nav-item" data-section="watchlist">
+                <i class="fas fa-binoculars"></i> Watchlist &amp; BIS
+            </button>
+            <button class="desk-nav-item" data-section="scheduled">
+                <i class="fas fa-calendar-check"></i> Scheduled posts
+            </button>
+            <button class="desk-nav-item" data-section="account">
+                <i class="fas fa-user-circle"></i> Account
+            </button>
+
+            <div class="desk-sidebar-foot">
+                <div id="deskVersion">Affiliaters</div>
+            </div>
+        </aside>
+
+        <main class="desk-main">
+
+            <!-- Sticky INSIDE the scroll area, not a grid row of its own — that is what
+                 lets content pass under it and the frosted blur have something to blur. -->
+            <header class="desk-header">
+            <h1 class="desk-title" id="deskTitle">History</h1>
+            <div class="desk-header-actions">
+                <div class="site-switcher-wrap">
+                    <button type="button" class="site-pill" id="deskSitePill" aria-haspopup="true" aria-expanded="false">
+                        <span class="site-dot" id="deskSitePillDot"></span>
+                        <span class="site-pill-name" id="deskSitePillName">Affiliaters</span>
+                        <i class="fas fa-chevron-down site-pill-caret"></i>
+                    </button>
+                    <div class="site-menu" id="deskSiteMenu" hidden>
+                        <button type="button" class="site-menu-item" data-site="affiliaters">
+                            <span class="site-dot dot-affiliaters"></span>
+                            <span class="site-menu-name">Affiliaters</span>
+                            <span class="site-menu-meta"></span>
+                        </button>
+                        <button type="button" class="site-menu-item" data-site="ekaro">
+                            <span class="site-dot dot-ekaro"></span>
+                            <span class="site-menu-name">EK Affiliaters</span>
+                            <span class="site-menu-meta"></span>
+                        </button>
+                    </div>
+                </div>
+                <button class="theme-toggle" id="deskThemeToggle" title="Toggle theme" aria-label="Toggle theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+            </header>
+
+            <!-- ---- History ---------------------------------------------- -->
+            <section class="desk-panel" id="sec-history">
+                <div class="desk-section-head">
+                    <div class="desk-toolbar">
+                        <input type="search" class="aff-underline-input" id="deskHistorySearch"
+                               placeholder="Search your conversions…" aria-label="Search conversions">
+                    </div>
+                    <button class="btn-secondary" id="deskClearHistory">
+                        <i class="fas fa-trash"></i> Clear history
+                    </button>
+                </div>
+                <div class="desk-history-list" id="deskHistoryList"></div>
+            </section>
+
+            <!-- ---- Shopping sites --------------------------------------- -->
+            <section class="desk-panel" id="sec-stores" hidden>
+                <div class="desk-grid" id="deskStoreGrid"></div>
+            </section>
+
+            <!-- ---- Message format --------------------------------------- -->
+            <section class="desk-panel" id="sec-format" hidden>
+                <div class="desk-grid-wide">
+                    <div class="desk-card">
+                        <div class="desk-card-head">
+                            <span class="desk-card-icon"><i class="fas fa-comment-dots"></i></span>
+                            <span class="desk-card-titles">
+                                <h2 class="desk-card-title">Deal format</h2>
+                                <span class="desk-card-sub">Any line whose placeholders come out empty is left out</span>
+                            </span>
+                        </div>
+                        <div class="desk-card-body">
+                        <textarea id="deskTemplate" spellcheck="false"></textarea>
+                        <div class="desk-toolbar" style="margin-top:12px">
+                            <button class="btn-primary" id="deskTemplateSave">
+                                <i class="fas fa-save"></i> Save format
+                            </button>
+                            <button class="btn-secondary" id="deskTemplateReset">
+                                <i class="fas fa-rotate-left"></i> Reset to default
+                            </button>
+                            <button class="btn-secondary" id="deskTemplateGuide">
+                                <i class="fas fa-circle-question"></i> Syntax guide
+                            </button>
+                        </div>
+                        <div id="deskTemplateStatus" class="desk-card-sub" style="margin:10px 0 0"></div>
+                        </div>
+                    </div>
+                    <div class="desk-card">
+                        <div class="desk-card-head">
+                            <span class="desk-card-icon"><i class="fas fa-code"></i></span>
+                            <span class="desk-card-titles">
+                                <h2 class="desk-card-title">Placeholders</h2>
+                                <span class="desk-card-sub">Click to insert at the cursor</span>
+                            </span>
+                        </div>
+                        <div class="desk-card-body">
+                            <div class="desk-toolbar" id="deskTokenList"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ---- Card design ------------------------------------------ -->
+            <section class="desk-panel" id="sec-card" hidden>
+                <div class="desk-card">
+                    <div class="desk-card-head">
+                        <span class="desk-card-icon"><i class="fas fa-image"></i></span>
+                        <span class="desk-card-titles">
+                            <h2 class="desk-card-title">Deal card design</h2>
+                            <span class="desk-card-sub">Click a design to use it. Previews use a sample product — the real card is drawn when you convert</span>
+                        </span>
+                    </div>
+                    <div class="desk-card-body">
+                        <div class="desk-card-sub" style="margin:12px 0 8px">
+                            Which image rides along with a shared post. Whether a post carries an image
+                            at all is the per-store <strong>Image</strong> toggle under Shopping sites.
+                        </div>
+                        <div class="watch-chips desk-mode-chips" id="deskImageMode">
+                            <button class="watch-chip" data-mode="product"><i class="fas fa-camera"></i> Product photo</button>
+                            <button class="watch-chip" data-mode="card"><i class="fas fa-image"></i> Deal card</button>
+                        </div>
+                        <div class="desk-design-grid" id="deskDesignGrid">
+                            <div class="desk-empty"><i class="fas fa-spinner fa-spin"></i>Drawing previews…</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ---- Watchlist & back in stock ---------------------------- -->
+            <section class="desk-panel" id="sec-watchlist" hidden>
+                <div class="desk-section-head">
+                    <p class="desk-card-sub" style="margin:0">
+                        Products you are tracking. You get an alert the moment one hits your price or comes back in stock.
+                    </p>
+                    <button class="btn-secondary" id="deskWatchCheck">
+                        <i class="fas fa-rotate"></i> Check all now
+                    </button>
+                </div>
+                <div class="desk-card" style="margin-bottom:18px">
+                    <div class="desk-card-head">
+                        <span class="desk-card-icon"><i class="fas fa-plus"></i></span>
+                        <span class="desk-card-titles">
+                            <h2 class="desk-card-title">Add a product</h2>
+                            <span class="desk-card-sub">Paste a store link and the current price is filled in for you</span>
+                        </span>
+                    </div>
+                    <div class="desk-card-body">
+                        <div class="desk-form">
+                            <div class="sched-field">
+                                <span class="sched-field-label">Product link</span>
+                                <input type="url" class="aff-underline-input" id="deskWatchUrl"
+                                       placeholder="https://www.amazon.in/dp/…" aria-label="Product link">
+                            </div>
+                            <div class="sched-field">
+                                <span class="sched-field-label">Target price</span>
+                                <input type="number" class="aff-underline-input" id="deskWatchTarget"
+                                       placeholder="₹ — else ₹1 under current" aria-label="Target price" min="1">
+                            </div>
+                            <div class="sched-field">
+                                <span class="sched-field-label">Alert me on</span>
+                                <select class="aff-underline-input aff-underline-select" id="deskWatchKind" aria-label="Alert on">
+                                    <option value="both">Price drop + back in stock</option>
+                                    <option value="priceDrop">Price drop only</option>
+                                    <option value="backInStock">Back in stock only</option>
+                                </select>
+                            </div>
+                            <button class="btn-primary" id="deskWatchAdd">
+                                <i class="fas fa-plus"></i> Add
+                            </button>
+                            <div class="desk-form-status" id="deskWatchStatus"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="desk-rows" id="deskWatchRows"></div>
+            </section>
+
+            <!-- ---- Scheduled posts -------------------------------------- -->
+            <section class="desk-panel" id="sec-scheduled" hidden>
+                <div class="desk-section-head">
+                    <p class="desk-card-sub" style="margin:0">
+                        Posts waiting to go out. Each one uses the price at the time it posts.
+                    </p>
+                </div>
+                <div class="desk-card" style="margin-bottom:18px">
+                    <div class="desk-card-head">
+                        <span class="desk-card-icon"><i class="fas fa-plus"></i></span>
+                        <span class="desk-card-titles">
+                            <h2 class="desk-card-title">Schedule a post</h2>
+                            <span class="desk-card-sub">Posts the price at the time it goes out, not the price right now</span>
+                        </span>
+                    </div>
+                    <div class="desk-card-body">
+                        <!-- Same five controls as the popup, and the same rule for which apply:
+                             Once needs a full date+time; every repeat needs a time, plus a
+                             weekday (weekly) or a day of the month (monthly). -->
+                        <div class="desk-form desk-form-sched">
+                            <div class="sched-field">
+                                <span class="sched-field-label">Product link</span>
+                                <input type="url" class="aff-underline-input" id="deskSchedUrl"
+                                       placeholder="https://www.flipkart.com/…" aria-label="Product link">
+                            </div>
+                            <div class="sched-field">
+                                <span class="sched-field-label">Post frequency</span>
+                                <select class="aff-underline-input aff-underline-select" id="deskSchedRepeat" aria-label="Post frequency">
+                                    <option value="none">Once</option>
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                            <div class="sched-field" id="deskSchedWhenField">
+                                <span class="sched-field-label">Date &amp; time</span>
+                                <input type="datetime-local" class="aff-underline-input" id="deskSchedWhen" aria-label="Date and time">
+                            </div>
+                            <div class="sched-field" id="deskSchedWeekdayField" hidden>
+                                <span class="sched-field-label">Day</span>
+                                <select class="aff-underline-input aff-underline-select" id="deskSchedWeekday" aria-label="Day of week">
+                                    <option value="0">Sunday</option>
+                                    <option value="1">Monday</option>
+                                    <option value="2">Tuesday</option>
+                                    <option value="3">Wednesday</option>
+                                    <option value="4">Thursday</option>
+                                    <option value="5">Friday</option>
+                                    <option value="6">Saturday</option>
+                                </select>
+                            </div>
+                            <div class="sched-field" id="deskSchedMonthdayField" hidden>
+                                <span class="sched-field-label">Day of month</span>
+                                <select class="aff-underline-input aff-underline-select" id="deskSchedMonthday" aria-label="Day of month"></select>
+                            </div>
+                            <div class="sched-field" id="deskSchedTimeField" hidden>
+                                <span class="sched-field-label">Time</span>
+                                <input type="time" class="aff-underline-input" id="deskSchedTime" aria-label="Time of day">
+                            </div>
+                            <button class="btn-primary" id="deskSchedAdd">
+                                <i class="fas fa-calendar-plus"></i> Schedule
+                            </button>
+                            <div class="desk-form-status" id="deskSchedStatus">
+                                If the product is out of stock or has no price when it is due, that post is
+                                skipped and the schedule keeps running.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="desk-rows" id="deskSchedRows"></div>
+            </section>
+
+            <!-- ---- Account ---------------------------------------------- -->
+            <section class="desk-panel" id="sec-account" hidden>
+                <div class="desk-grid" id="deskAccountGrid"></div>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/storage.js"></script>
+    <script src="../js/deal-card.js"></script>
+    <script src="../js/desktop.js"></script>
+</body>
+
+</html>

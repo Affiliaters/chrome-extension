@@ -1,0 +1,769 @@
+/* =========================================================
+   Desktop mode — wide, full-tab layout for html/desktop.html
+   =========================================================
+
+   Loaded AFTER styles.css, which supplies the theme variables and the card
+   primitives (.settings-acc, .history-item, .btn-*, .profile-card). Nothing in
+   styles.css is modified or overridden by width here: that file caps the popup at
+   375x600 (.dashboard-container) and floors the iPad popover in an
+   `@media (pointer: coarse)` block, so keeping this layout in its own file and on
+   its own class names is what guarantees the popup cannot regress.
+
+   These are the first `display: grid` rules in the codebase — the rest of the UI is
+   bespoke flex. Panels use `align-items: start` throughout so an accordion opening
+   never stretches the card beside it.
+
+   Colors come only from the SEMANTIC variables (--card-bg, --border-color,
+   --text-color, --primary-color, --primary-tint) so dark mode and the EK green
+   retint (body.site-ekaro) both apply for free. The legacy --dark-* variables are
+   deliberately never referenced.
+*/
+
+/* styles.css:86-87 hardcodes body background #ffffff / color #333333. Invisible
+   behind a 375px popup; full-screen in a tab. Put it back on the variables.
+
+   And the variables alone are not enough here: in LIGHT theme --background-color
+   and --card-bg are BOTH #FFFFFF, and in DARK both are #111315 (styles.css:6/11
+   and :36/37). A 375px popup floats as one card so nothing shows, but full-screen
+   that collapses the page, the sidebar, the header and every card into a single
+   flat sheet separated only by #EFEFEF hairlines — which is the white slab you get.
+   Desktop therefore defines its own two-level surface pair and maps cards onto it. */
+body.desk-body {
+    --desk-canvas: #F3F4F6;
+    --desk-surface: #FFFFFF;
+    --desk-sunken: #F9FAFB;
+    /* Frosted header — the surface at 72%, so what scrolls under it shows through. */
+    --desk-glass: rgba(255, 255, 255, 0.72);
+    background-color: var(--desk-canvas);
+    color: var(--text-color);
+    margin: 0;
+}
+
+body.desk-body.dark-theme {
+    --desk-canvas: #0B0D0E;
+    --desk-surface: #1A1D1F;
+    --desk-sunken: #141719;
+    --desk-glass: rgba(26, 29, 31, 0.72);
+}
+
+/* Two areas, not four: the header lives INSIDE the scrolling body as a sticky bar so
+   content passes under it (a header in its own grid row scrolls beside the content,
+   and then the frosted blur has nothing to blur). */
+.desk-shell {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 248px minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: "sidebar body";
+    background-color: var(--desk-canvas);
+}
+
+/* ---- Sidebar ---------------------------------------------------------- */
+
+.desk-sidebar {
+    grid-area: sidebar;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 10px;
+    border-right: 1px solid var(--border-color);
+    background: var(--desk-surface);
+    overflow-y: auto;
+}
+
+.desk-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 8px 16px;
+}
+
+.desk-brand .nav-logo {
+    height: 26px;
+    width: auto;
+}
+
+/* Centred under the wordmark and in the accent, so it reads as part of the mark —
+   and via --primary-color it retints green on the EK platform for free. */
+.desk-brand-tag {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--primary-color);
+}
+
+.desk-nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 10px;
+    background: none;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.desk-nav-item i {
+    width: 18px;
+    text-align: center;
+    font-size: 15px;
+}
+
+.desk-nav-item:hover { background: var(--primary-tint); }
+
+.desk-nav-item.active {
+    background: var(--primary-tint);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.desk-nav-item[hidden] { display: none; }
+
+.desk-sidebar-foot {
+    margin-top: auto;
+    /* Bottom padding, not just top: the sidebar is the full grid row height, so
+       without it the version line sits flush on the viewport edge and clips. */
+    padding: 12px 12px 4px;
+    border-top: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    font-size: 11.5px;
+}
+
+/* ---- Header ----------------------------------------------------------- */
+
+/* Negative side margins cancel .desk-main's padding so the bar spans the full column
+   edge to edge, the way the site's does. */
+.desk-header {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 -28px 24px;
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--border-color);
+    background: var(--desk-glass);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    backdrop-filter: saturate(180%) blur(14px);
+}
+
+/* Without backdrop-filter the translucency would just let text collide with text. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .desk-header { background: var(--desk-surface); }
+}
+
+.desk-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.desk-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ---- Body / panels ---------------------------------------------------- */
+
+/* .desk-main, NOT .desk-body — <body> carries .desk-body, so a shared class would
+   put this padding on the page itself and inset the whole shell (a grey margin down
+   the left and across the top, plus 72px of body padding on top of the shell's
+   100vh, pushing the sidebar footer past the fold). */
+.desk-main {
+    grid-area: body;
+    overflow-y: auto;
+    /* No top padding — the sticky header supplies the gap via its own margin. */
+    padding: 0 28px 48px;
+}
+
+.desk-panel {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.desk-panel[hidden] { display: none; }
+
+/* Two-up / auto-fitting card grid. minmax(0,…) so long words can't force overflow. */
+.desk-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 18px;
+    align-items: start;
+}
+
+.desk-grid-wide {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    gap: 18px;
+    align-items: start;
+}
+
+@media (max-width: 1100px) {
+    .desk-grid-wide { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* A card in the app's own language: the .settings-acc shell (12px radius, 1px
+   border, --card-bg) with its signature 36x36 tinted icon tile and the
+   title-over-subtitle pairing — just without the disclosure triangle, since a
+   desktop panel has no reason to collapse. Same tokens, so the EK green retint
+   and dark mode carry through untouched. */
+.desk-card {
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--desk-surface);
+    overflow: hidden;
+}
+
+.desk-card-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+}
+
+.desk-card-icon {
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: var(--primary-tint);
+    color: var(--primary-color);
+    font-size: 15px;
+}
+
+.desk-card-titles {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.desk-card-title {
+    margin: 0;
+    font-size: 14.5px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.desk-card-sub {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.desk-card-body {
+    padding: 4px 14px 16px;
+    border-top: 1px solid var(--border-color);
+}
+
+/* Retailer tile, mirroring .store-card / .store-brand-icon from the dashboard. */
+.desk-store {
+    background: var(--desk-surface);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 12px 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.desk-store:hover { box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06); }
+
+.desk-store-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.desk-store-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    color: #fff;
+    font-size: 13px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.desk-store-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 1px;
+    box-sizing: border-box;
+}
+
+.desk-store-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.desk-store-host {
+    margin-left: auto;
+    font-size: 11.5px;
+    color: var(--text-secondary);
+}
+
+.desk-section-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.desk-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+/* A toolbar in a section head takes the free width so its search box can use it,
+   instead of sitting at its 240px basis with the rest of the row empty. */
+.desk-section-head .desk-toolbar { flex: 1 1 auto; }
+
+/* Inputs are the extension's OWN .aff-underline-input / .aff-underline-select and
+   .sched-field / .sched-field-label — the same underline treatment, the same 11px
+   sentence-case label, the same focus accent as the popup's scheduling form. Only the
+   popup-specific sizing is unpicked: .sched-field is flex:1/min-width:130px for a
+   375px column, which a desktop grid track sizes instead. */
+.desk-section-head .aff-underline-input {
+    flex: 1 1 240px;
+    min-width: 0;
+    max-width: 460px;
+}
+
+/* Buttons are the extension's OWN .btn-primary / .btn-secondary — same 12px radius,
+   48px height, 16px type and colour tokens as the popup. The only thing unpicked is
+   `width: 100%`, which exists so a button fills the 375px popup and would stretch a
+   desktop toolbar edge to edge. Nothing else is restyled, so the two surfaces match. */
+.desk-toolbar .btn-primary,
+.desk-toolbar .btn-secondary,
+.desk-section-head .btn-primary,
+.desk-section-head .btn-secondary {
+    width: auto;
+    flex: 0 0 auto;
+    padding: 0 18px;
+    font-size: 14px;
+    height: 40px;
+    gap: 8px;
+}
+
+/* Placeholders are grouped (product / discount / bank card / source / logic) —
+   seventeen unlabelled chips in one heap is a list, not a reference. */
+.desk-token-group { margin-bottom: 14px; }
+
+.desk-token-group:last-child { margin-bottom: 0; }
+
+.desk-token-group-title {
+    margin-bottom: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+/* Token chips in the template editor: same secondary button, monospace + compact. */
+.desk-token {
+    font-family: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 8px;
+}
+
+/* ---- History ---------------------------------------------------------- */
+
+.desk-history-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 12px;
+    align-items: start;
+}
+
+/* .history-item is --deal-card-bg (#F4F4F4 light), which reads as a card only
+   against the popup's white sheet. On the desktop canvas it would vanish, so it
+   sits on the raised surface with the same hairline every other desktop card has. */
+.desk-history-list .history-item {
+    margin: 0;
+    background: var(--desk-surface);
+    border: 1px solid var(--border-color);
+}
+
+.desk-history-list .history-text {
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 190px;
+    overflow-y: auto;
+}
+
+/* .btn-history-action keeps its amber Copy / red Delete identity from the popup —
+   only `flex: 1` is unpicked, because at desktop width two stretched buttons
+   outweigh the deal text they act on. */
+.desk-history-list .history-actions {
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.desk-history-list .btn-history-action {
+    flex: 0 0 auto;
+    padding: 0 18px;
+}
+
+/* ---- Card design gallery ---------------------------------------------- */
+
+.desk-design-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 14px;
+}
+
+.desk-design {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.desk-design img {
+    width: 100%;
+    aspect-ratio: 1200 / 628;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    background: var(--desk-sunken);
+    transition: border-color 0.15s ease;
+}
+
+.desk-design.active img { border-color: var(--primary-color); }
+
+.desk-design-name {
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: left;
+}
+
+.desk-design.active .desk-design-name {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* A gallery of pictures gives no hint that the pictures are the control. The tile
+   carries an explicit state chip — hollow "Select" that fills on hover, solid
+   "Selected" with a tick once it is the chosen design. */
+.desk-design-thumb { position: relative; }
+
+.desk-design-badge {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 9px;
+    border-radius: 999px;
+    background: rgba(17, 19, 21, 0.55);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    backdrop-filter: blur(3px);
+}
+
+.desk-design:hover .desk-design-badge { background: var(--primary-color); }
+.desk-design.active .desk-design-badge { background: var(--primary-color); }
+
+/* Image-style chips (Product photo / Deal card) reuse the dashboard's .watch-chip. */
+.desk-mode-chips {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+}
+
+/* ---- Account ---------------------------------------------------------- */
+
+/* The popup's .profile-card pairing — round avatar, platform name over email —
+   scaled to a desktop card so the section reads as an account, not a text list. */
+.desk-account-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 14px;
+}
+
+.desk-avatar {
+    flex: 0 0 auto;
+    width: 46px;
+    height: 46px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--primary-tint);
+    color: var(--primary-color);
+    font-size: 24px;
+}
+
+.desk-account-name {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.desk-account-email {
+    margin-top: 2px;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.desk-badge {
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--primary-tint);
+    color: var(--primary-color);
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.desk-badge-muted {
+    background: var(--desk-sunken);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+/* Logout keeps the popup's destructive red rather than becoming another grey button.
+   Prefixed with `body` to out-specify styles.css:233 `body.dark-theme .btn-secondary`,
+   which would otherwise repaint it grey in dark mode only. */
+body .desk-account-actions .btn-danger {
+    color: var(--error-color);
+    border-color: var(--error-color);
+}
+
+/* ---- Rows (watchlist / scheduled) ------------------------------------- */
+
+.desk-rows {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.desk-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: var(--desk-surface);
+}
+
+.desk-row-main { min-width: 0; }
+
+.desk-row-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.desk-row-meta {
+    margin-top: 4px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.desk-row-actions { display: flex; gap: 8px; }
+
+/* ---- Empty / status --------------------------------------------------- */
+
+.desk-empty {
+    padding: 44px 20px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 13.5px;
+    border: 1px dashed var(--border-color);
+    border-radius: 12px;
+}
+
+.desk-empty i {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 26px;
+    color: var(--primary-color);
+    opacity: 0.7;
+}
+
+.desk-toast {
+    position: fixed;
+    left: 50%;
+    bottom: 26px;
+    transform: translateX(-50%);
+    z-index: 60;
+    padding: 11px 20px;
+    border-radius: 10px;
+    background: var(--primary-color);
+    color: var(--white);
+    font-size: 13.5px;
+    font-weight: 600;
+    box-shadow: var(--card-shadow);
+}
+
+/* Textareas inside desktop cards get the room the popup never had. */
+.desk-card textarea {
+    width: 100%;
+    min-height: 260px;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background: var(--desk-sunken);
+    color: var(--text-color);
+    font-family: 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    resize: vertical;
+}
+
+.desk-card textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px var(--primary-tint);
+}
+
+/* Toggle rows reused for per-store settings. */
+.desk-toggle-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.desk-toggle-row:last-child { border-bottom: none; }
+
+.desk-toggle-label {
+    font-size: 13.5px;
+    color: var(--text-color);
+}
+
+/* ---- Store card option groups (mirrors .store-section-* in the dashboard) ---- */
+
+.desk-store-group { margin-top: 10px; }
+
+.desk-store-group-title {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.desk-store-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+/* No box per toggle — the store card is already the container, and a tinted chip
+   around every switch just stacks a second surface inside it. Plain rows. */
+.desk-store-opt {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 7px 0;
+}
+
+.desk-store-opt .desk-toggle-label { font-size: 12.5px; }
+
+/* ---- Add forms (watchlist / scheduled) -------------------------------- */
+
+/* Explicit tracks, NOT repeat(auto-fit,…) after a sized track — auto-fit collapses
+   there and the URL field ends up a sliver. Order: link, value, option, action. */
+.desk-form {
+    display: grid;
+    grid-template-columns: minmax(240px, 2fr) minmax(150px, 0.8fr) minmax(180px, 0.9fr) auto;
+    gap: 10px;
+    /* Fields carry a label above the control, so align on the control row, not centres. */
+    align-items: end;
+}
+
+/* Scheduling has five controls, and which of the middle ones apply depends on the
+   frequency (Once → a full date+time; Daily → time; Weekly → weekday + time;
+   Monthly → day-of-month + time). Fixed tracks, so a field hiding itself never
+   reshuffles the row. */
+.desk-form-sched {
+    grid-template-columns:
+        minmax(220px, 1.6fr) minmax(140px, 0.8fr) minmax(160px, 0.9fr) minmax(130px, 0.6fr) auto;
+}
+
+/* styles.css already gives .sched-field its column layout, its 4px label gap and a
+   [hidden] rule; only the popup's min-width needs releasing so a grid track decides. */
+.desk-form .sched-field { min-width: 0; }
+
+/* Buttons sit in a labelled row, so nudge them down past the label line. */
+.desk-form .btn-primary {
+    width: auto;
+    flex: 0 0 auto;
+    padding: 0 18px;
+    font-size: 14px;
+    height: 40px;
+    gap: 8px;
+}
+
+.desk-form .btn-primary { align-self: end; }
+
+@media (max-width: 1200px) {
+    .desk-form-sched { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+}
+
+@media (max-width: 1000px) {
+    .desk-form,
+    .desk-form-sched { grid-template-columns: minmax(0, 1fr); }
+}
+
+.desk-form-status {
+    grid-column: 1 / -1;
+    font-size: 12.5px;
+    color: var(--text-secondary);
+}
