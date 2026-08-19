@@ -14,6 +14,7 @@
     <div class="dashboard-container app-shell">
         <header class="app-header">
             <img src="../assets/logo.png" alt="Affiliaters Logo" class="nav-logo">
+            <span class="beta-badge">Beta</span>
             <div class="header-actions">
                 <div class="site-switcher-wrap">
                     <button type="button" class="site-pill" id="siteSwitcherBtn" aria-haspopup="true" aria-expanded="false">
@@ -117,12 +118,12 @@
                         <span class="settings-acc-icon"><i class="fas fa-store"></i></span>
                         <span class="settings-acc-titles">
                             <span class="settings-acc-title">Shopping sites</span>
-                            <span class="settings-acc-sub">Convert buttons &amp; autopost per site</span>
+                            <span class="settings-acc-sub">Per-site buttons &amp; posting options</span>
                         </span>
                         <i class="fas fa-chevron-down settings-acc-caret"></i>
                     </summary>
                     <div class="settings-acc-body">
-                        <p class="settings-section-note">Turn on Convert buttons, Auto Post, or product Image per site. All off by default.</p>
+                        <p class="settings-section-note">Per-site switches for what the extension shows and posts on each site. All off by default.</p>
                         <div class="stores-cards-container" id="storesCardsContainer"></div>
                         <div id="autopostNonProductWarning" class="autopost-warning">
                             <strong>Warning:</strong> Enabling "AP Non-Prod" for any website will automatically post a deal for <strong>every new page visit</strong> (e.g. search queries, categories, etc.) you browse on that website, unless you have visited that exact page within the cooldown period.
@@ -140,17 +141,17 @@
                                     </button>
                                 </div>
                                 <div class="convert-btn-help-tip" id="repeatHelpTip" hidden>
-                                    One window for every way a deal goes out, automatic and manual alike.
+                                    One window for every way a deal goes out.
                                     Inside it, the same product is never posted twice: a convert you trigger
-                                    yourself asks you first (post again or cancel), and a post nothing can ask
-                                    about — Auto Post, a scheduled post, a watchlist alert — is skipped and
-                                    reported. Counting starts from the last successful post of that product.
+                                    yourself asks you first (post again or cancel); any posting path that
+                                    cannot ask is skipped and reported. Counting starts from the last
+                                    successful post of that product.
                                 </div>
                                 <div class="stores-cooldown">
                                     <span class="stores-cooldown-label">
                                         <span>Don’t post the same product twice within</span>
                                     </span>
-                                    <select id="autopostCooldown" class="autopost-cooldown-select">
+                                    <select id="postedCooldown" class="aff-cooldown-select">
                                         <option value="15">15 minutes</option>
                                         <option value="30">30 minutes</option>
                                         <option value="60">1 hour</option>
@@ -416,7 +417,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
 
                         <div class="tg-setting-row">
                             <label class="tg-setting-label" for="tgActionMode">On new message</label>
-                            <select id="tgActionMode" class="autopost-cooldown-select">
+                            <select id="tgActionMode" class="aff-cooldown-select">
                                 <option value="off">Off — do nothing</option>
                                 <option value="open">Open links in tabs</option>
                                 <option value="forward">Forward message to converter</option>
@@ -426,7 +427,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
                         <div id="tgForwardWrap" hidden>
                             <div class="tg-setting-row">
                                 <label class="tg-setting-label" for="tgForwardTrigger">Forward when</label>
-                                <select id="tgForwardTrigger" class="autopost-cooldown-select">
+                                <select id="tgForwardTrigger" class="aff-cooldown-select">
                                     <option value="auto">Auto — every new message</option>
                                     <option value="manual">Manual — I pick with a button</option>
                                     <option value="both">Both</option>
@@ -445,7 +446,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
                         <div id="tgOpenWrap">
                             <div class="tg-setting-row">
                                 <label class="tg-setting-label" for="tgLinkMode">Which links to open</label>
-                                <select id="tgLinkMode" class="autopost-cooldown-select">
+                                <select id="tgLinkMode" class="aff-cooldown-select">
                                     <option value="first">First link only</option>
                                     <option value="all">All links</option>
                                     <option value="selected">Only selected stores</option>
@@ -459,7 +460,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
 
                             <div class="tg-setting-row">
                                 <label class="tg-setting-label" for="tgTabMode">Open tabs in</label>
-                                <select id="tgTabMode" class="autopost-cooldown-select">
+                                <select id="tgTabMode" class="aff-cooldown-select">
                                     <option value="background">Background</option>
                                     <option value="foreground">Foreground</option>
                                 </select>
@@ -491,7 +492,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
 
                         <div class="tg-setting-row">
                             <label class="tg-setting-label" for="waActionMode">On new message</label>
-                            <select id="waActionMode" class="autopost-cooldown-select">
+                            <select id="waActionMode" class="aff-cooldown-select">
                                 <option value="off">Off — do nothing</option>
                                 <option value="open">Open links in tabs</option>
                                 <option value="forward">Forward message to converter</option>
@@ -501,7 +502,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
                         <div id="waForwardWrap" hidden>
                             <div class="tg-setting-row">
                                 <label class="tg-setting-label" for="waForwardTrigger">Forward when</label>
-                                <select id="waForwardTrigger" class="autopost-cooldown-select">
+                                <select id="waForwardTrigger" class="aff-cooldown-select">
                                     <option value="auto">Auto — every new message</option>
                                     <option value="manual">Manual — I pick with a button</option>
                                     <option value="both">Both</option>
@@ -520,7 +521,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
                         <div id="waOpenWrap">
                             <div class="tg-setting-row">
                                 <label class="tg-setting-label" for="waLinkMode">Which links to open</label>
-                                <select id="waLinkMode" class="autopost-cooldown-select">
+                                <select id="waLinkMode" class="aff-cooldown-select">
                                     <option value="first">First link only</option>
                                     <option value="all">All links</option>
                                     <option value="selected">Only selected stores</option>
@@ -534,7 +535,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
 
                             <div class="tg-setting-row">
                                 <label class="tg-setting-label" for="waTabMode">Open tabs in</label>
-                                <select id="waTabMode" class="autopost-cooldown-select">
+                                <select id="waTabMode" class="aff-cooldown-select">
                                     <option value="background">Background</option>
                                     <option value="foreground">Foreground</option>
                                 </select>
@@ -553,7 +554,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
                 </details>
             </section>
 
-            <!-- DEALS: deal-card generator (all builds) + scheduled posts & watchlist (github) -->
+            <!-- DEALS: deal-card generator (all builds) + extra github-only sections -->
             <section class="tab-panel" id="tab-deals" hidden>
 
                 <details class="settings-acc" id="dealCardAcc">
@@ -592,8 +593,7 @@ Apply {{card_bank}} Bank {{card_type}} Card Offer To Get @ {{math price - coupon
                                 <strong>Product image</strong> toggle under <strong>Shopping sites</strong>.
                                 This only picks which image the stores you turned on get: the retailer photo,
                                 or the deal card in the design selected here. Applies everywhere a deal goes
-                                out — Convert Share buttons, this dashboard, right-click, shortcuts, scheduled
-                                posts and watchlist alerts.
+                                out — Convert Share buttons, this dashboard, right-click and shortcuts.
                             </div>
                             <label class="sched-field post-image-design">
                                 <span class="sched-field-label">Card design</span>

@@ -122,6 +122,19 @@ body {
     box-shadow: var(--card-shadow);
 }
 
+/* Pre-sign-in disclosure: what authorizing shares and that links are affiliate links */
+.auth-disclosure {
+    margin-top: 16px;
+    font-size: 11.5px;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    text-align: left;
+}
+
+.auth-disclosure a {
+    color: var(--primary-color);
+}
+
 /* Logo styles */
 .logo-container {
     margin-bottom: 32px;
@@ -131,6 +144,73 @@ body {
     width: 120px;
     height: auto;
     margin-bottom: 24px;
+}
+
+/* "Beta" mark beside the logo — this build gains features continuously, and without a
+   marker a rough edge reads as a broken product rather than an in-progress one.
+   ADDITIVE ONLY: a new class name, so none of the rules above change. That matters in
+   this file, where .nav-logo is defined three times and .history-item five — editing an
+   existing rule here is how the popup regresses.
+   Geometry matches .desk-badge in desktop.css so the pill looks the same on every
+   surface. Amber, NOT --primary-color: the accent reads as decoration, and on the EK
+   platform it turns green, where a green pill looks like a status tick. */
+.beta-badge {
+    --beta-fg: #92400E;
+    --beta-bg: rgba(245, 158, 11, 0.16);
+    display: inline-block;
+    padding: 3px 9px;
+    border-radius: 999px;
+    background: var(--beta-bg);
+    color: var(--beta-fg);
+    font-size: 10.5px;
+    font-weight: 700;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    vertical-align: middle;
+}
+
+body.dark-theme .beta-badge {
+    --beta-fg: #FBBF24;
+    --beta-bg: rgba(245, 158, 11, 0.18);
+}
+
+/* Compact headers: inline beside a 26-32px logo. .top-nav is all-conversions.html,
+   which uses nav.top-nav > .nav-left rather than .app-header.
+
+   The dashboard header at 375px is genuinely full: logo + platform pill + two icon
+   buttons leave 343px of usable width for 376px of content once anything joins them, and
+   the EK pill ("EK Affiliaters") is 20px wider than the Affiliaters one. So here the mark
+   drops the pill and becomes plain amber text — the cheapest form that still reads. */
+.app-header .beta-badge,
+.top-nav .beta-badge {
+    margin-left: 6px;
+    padding: 0;
+    background: none;
+    font-size: 9px;
+    letter-spacing: 0.02em;
+}
+
+/* Two rules that make the row adapt instead of overflowing, in priority order:
+   the wordmark gives up width first (it stays legible when scaled), and the badge never
+   does. Letting the PILL ellipsize was tried and rejected — it collapsed to 18px ("A…"),
+   which tells the user nothing about which platform is active.
+   Prefixed with `body` on purpose: `.app-header .nav-logo` is redefined again at line
+   ~2280, i.e. LATER in this file, so an equal-specificity rule here would silently lose
+   the cascade. The extra element selector wins without editing that block. */
+body .app-header .nav-logo {
+    height: 22px;
+    min-width: 0;
+    flex-shrink: 1;
+    object-fit: contain;
+    object-position: left center;
+}
+
+/* Popup auth screens: the logo is 120px and centred, so the badge sits under it and
+   absorbs the margin the logo was carrying rather than adding to it. */
+.logo-container .beta-badge {
+    margin-top: -14px;
 }
 
 /* Typography */
@@ -2421,7 +2501,7 @@ body.dark-theme .toggle-label {
     color: var(--primary-color);
 }
 
-/* WhatsApp tab is revealed by JS only on web.whatsapp.com; the class's
+/* Some nav tabs are revealed by JS only in specific contexts; the class's
    display:flex would otherwise override the hidden attribute. */
 .nav-tab[hidden] {
     display: none;
@@ -2918,7 +2998,7 @@ body.dark-theme .toggle-label {
     color: var(--text-color);
 }
 
-.autopost-cooldown-select {
+.aff-cooldown-select {
     font-size: 13px;
     font-weight: 500;
     color: var(--text-color);
@@ -3631,7 +3711,7 @@ body.dark-theme .convert-btn-help-tip {
 .autopost-warning strong {
     color: var(--error-color, #FF6A55);
 }
-/* ---- Deals tab: deal card, scheduled posts, watchlist ---- */
+/* ---- Deals tab: deal card + shared field/chip styles ---- */
 .deal-card-toolbar {
     display: flex;
     gap: 10px;
@@ -3762,7 +3842,7 @@ body:not(.dark-theme) .aff-underline-input[type="number"] {
     color: var(--white, #fff);
 }
 
-/* Watchlist / Back-in-stock empty states */
+/* Shared empty-state block */
 .aff-empty {
     display: flex;
     flex-direction: column;

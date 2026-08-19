@@ -84,6 +84,14 @@ body.desk-body.dark-theme {
     width: auto;
 }
 
+/* .desk-brand is a COLUMN, which is why these labels stack under the logo and read as
+   a subtitle rather than sitting beside it. This row keeps the two side by side there. */
+.desk-brand-tags {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
 /* Centred under the wordmark and in the accent, so it reads as part of the mark —
    and via --primary-color it retints green on the EK platform for free. */
 .desk-brand-tag {
@@ -575,7 +583,7 @@ body .desk-account-actions .btn-danger {
     border-color: var(--error-color);
 }
 
-/* ---- Rows (watchlist / scheduled) ------------------------------------- */
+/* ---- List rows (github-only sections) --------------------------------- */
 
 .desk-rows {
     display: flex;
@@ -716,7 +724,7 @@ body .desk-account-actions .btn-danger {
 
 .desk-store-opt .desk-toggle-label { font-size: 12.5px; }
 
-/* ---- Add forms (watchlist / scheduled) -------------------------------- */
+/* ---- Add forms (github-only sections) --------------------------------- */
 
 /* Explicit tracks, NOT repeat(auto-fit,…) after a sized track — auto-fit collapses
    there and the URL field ends up a sliver. Order: link, value, option, action. */
