@@ -106,7 +106,7 @@ If you skip the installer, the extension still checks for new versions and shows
 
 ## 🔒 Privacy & permissions
 
-> **This is the GitHub / sideloaded build, not the Chrome Web Store version.** The store build is covered by different, narrower policies at [affiliaters.in/extension-privacy](https://affiliaters.in/extension-privacy) and [affiliaters.in/extension-terms](https://affiliaters.in/extension-terms).
+> **This is the GitHub / sideloaded build, not the Chrome Web Store version.** The store build is covered by different, narrower policies at [affiliaters.in/extension/privacy.html](https://affiliaters.in/extension/privacy.html) and [affiliaters.in/extension/terms.html](https://affiliaters.in/extension/terms.html).
 
 The extension needs access to the supported store sites (Convert buttons + product details), Telegram Web (automation), and the Affiliaters API (convert links, share, history). It only runs on those sites and your chosen platform.
 
