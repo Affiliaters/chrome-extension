@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Affiliaters Deal Converter",
-  "version": "0.0.60",
+  "version": "0.0.61",
   "description": "Convert deals using Affiliaters",
   "permissions": [
     "storage",
